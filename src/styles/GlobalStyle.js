@@ -26,25 +26,38 @@ const GlobalStyle = createGlobalStyle`
     font: inherit;
     vertical-align: baseline;
   }
+
   /* HTML5 display-role reset for older browsers */
   article, aside, details, figcaption, figure, 
   footer, header, hgroup, menu, nav, section {
     display: block;
   }
+
+  :root {
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   body {
     line-height: 1;
   }
+
   ol, ul {
     list-style: none;
   }
+
   blockquote, q {
     quotes: none;
   }
+
   blockquote:before, blockquote:after,
   q:before, q:after {
     content: '';
     content: none;
   }
+  
   table {
     border-collapse: collapse;
     border-spacing: 0;
