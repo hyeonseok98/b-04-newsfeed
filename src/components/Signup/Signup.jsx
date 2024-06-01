@@ -1,17 +1,27 @@
-import useSignup from "../../hooks/useSignup";
+import useSignUp from "../../hooks/useSignUp";
 
-const Signup = ({ togglePage }) => {
-  const { email, setEmail, password, setPassword, error, loading, handleSignup } = useSignup();
-  console.log(email, password);
+const SignUp = ({ togglePage }) => {
+  const { email, password, setCredentials, handleSignup } = useSignUp();
+
   return (
     <form onSubmit={handleSignup}>
       <h3>회원가입</h3>
-      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setCredentials((prev) => ({ ...prev, email: e.target.value }))}
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setCredentials((prev) => ({ ...prev, password: e.target.value }))}
+      />
+      <input type="text" />
+
       <button>ㅇㅇㅇ</button>
       <span onClick={togglePage}>로그인 어쩌구</span>
     </form>
   );
 };
 
-export default Signup;
+export default SignUp;
