@@ -1,27 +1,26 @@
 import { useState } from "react";
-import Login from "../Login/Login";
-import Signup from "../Signup/Signup";
+import Login from "../EmailAuth/EmailAuth";
+import SignInWithOAuth from "../SignInWithOAuth/SignInWithOAuth";
+import { StDialog, StDiv } from "./AuthModal.styled";
+import { useDispatch } from "react-redux";
+import { closeModal } from "../../store/slices/authSlice";
 
-const AuthModal = ({ open, onClose }) => {
+const AuthModal = ({ open }) => {
+  const dispatch = useDispatch();
   const [isLoginPage, setIsLoginPage] = useState(true);
   const toggleModalPage = () => setIsLoginPage((prev) => !prev);
   const handleClose = (e) => {
     if (e.target === e.currentTarget) {
-      onClose();
+      dispatch(closeModal());
     }
   };
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-      }}
-    >
-      <dialog onClick={handleClose} open={open}>
-        {isLoginPage && <Login togglePage={toggleModalPage} />}
-        {!isLoginPage && <Signup togglePage={toggleModalPage} />}
-      </dialog>
-    </div>
+    <StDiv onClick={handleClose}>
+      <StDialog open={open}>
+        <Login isLoginPage={isLoginPage} togglePage={toggleModalPage} />
+        {isLoginPage && <SignInWithOAuth />}
+      </StDialog>
+    </StDiv>
   );
 };
 
