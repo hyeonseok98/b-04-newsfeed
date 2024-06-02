@@ -3,16 +3,16 @@ import { useDispatch } from "react-redux";
 import { closeModal } from "../store/slices/authSlice";
 import { signInWithEmail, signUp } from "../supabase/auth";
 
-const initialCredentials = { email: "", password: "", nickname: "" };
 const initialStatus = { error: "", loading: false };
 
-const useAuthWithEmail = (isSignIn = false) => {
+const useAuthWithEmail = () => {
   const dispatch = useDispatch();
-  const [credentials, setCredentials] = useState(initialCredentials);
+
   const [status, setStatus] = useState(initialStatus);
 
-  const handleAuthWithEmail = async () => {
+  const handleAuthWithEmail = async (isSignIn = false, credentials) => {
     setStatus({ error: "", loading: true });
+    console.log(credentials);
     const { email, password, nickname } = credentials;
     const { error } = isSignIn ? await signInWithEmail(email, password) : await signUp(email, password, nickname);
 
@@ -20,7 +20,6 @@ const useAuthWithEmail = (isSignIn = false) => {
       setStatus({ error: error.message, loading: false });
       alert(status.error);
     } else {
-      setCredentials(initialCredentials);
       setStatus(initialStatus);
       if (isSignIn) {
         alert("로그인 완료");
@@ -32,8 +31,6 @@ const useAuthWithEmail = (isSignIn = false) => {
   };
 
   return {
-    credentials,
-    setCredentials,
     status,
     handleAuthWithEmail,
   };

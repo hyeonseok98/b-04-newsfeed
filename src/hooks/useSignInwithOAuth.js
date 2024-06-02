@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { closeModal, login } from "../store/slices/authSlice";
+import { closeModal } from "../store/slices/authSlice";
 import { signInWithOAuth } from "../supabase/auth";
 
 const initialStatus = {
@@ -17,7 +17,7 @@ const useSignInwithOAuth = () => {
     const { error } = await signInWithOAuth(provider);
     if (error) {
       setStatus({ error: error.message, loading: false });
-      alert(`Error: ${error.message}`);
+      alert(error.message);
     } else {
       dispatch(closeModal());
       setStatus(initialStatus);
