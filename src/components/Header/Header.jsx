@@ -4,6 +4,7 @@ import { initializeAuthState, checkUserStatus, handleAuthStateChange } from "../
 import { openModal } from "../../store/slices/authSlice";
 import AuthModal from "../Auth/AuthModal/AuthModal";
 import useSignOut from "../../hooks/useSignOut";
+import { StHeader } from "./Header.styled";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -20,12 +21,12 @@ const Header = () => {
   }, [dispatch]);
 
   return (
-    <header>
+    <StHeader>
       {!isLoggedin && <button onClick={() => dispatch(openModal())}>Login</button>}
       {isLoggedin && <button onClick={handleSignOut}>Logout</button>}
       {isModalOpen && <AuthModal open={isModalOpen} />}
       {displayName && <span>{displayName}</span>}
-    </header>
+    </StHeader>
   );
 };
 
