@@ -7,26 +7,32 @@ const initialStatus = { error: "", loading: false };
 
 const useAuthWithEmail = () => {
   const dispatch = useDispatch();
-
   const [status, setStatus] = useState(initialStatus);
 
   const handleAuthWithEmail = async (isSignIn = false, credentials) => {
     setStatus({ error: "", loading: true });
-    console.log(credentials);
     const { email, password, nickname } = credentials;
-    const { error } = isSignIn ? await signInWithEmail(email, password) : await signUp(email, password, nickname);
 
-    if (error) {
-      setStatus({ error: error.message, loading: false });
-      alert(status.error);
-    } else {
-      setStatus(initialStatus);
-      if (isSignIn) {
-        alert("로그인 완료");
+    try {
+      const { error, user } = isSignIn
+        ? await signInWithEmail(email, password)
+        : await signUp(email, password, nickname);
+
+      if (error) {
+        setStatus({ error: error.message, loading: false });
+        alert(error.message);
       } else {
-        alert("이메일 본인확인...");
+        setStatus(initialStatus);
+        if (isSignIn) {
+          alert("로그인 완료");
+        } else {
+          alert("이메일 본인확인...");
+        }
+        dispatch(closeModal());
       }
-      dispatch(closeModal());
+    } catch (err) {
+      setStatus({ error: err, loading: false });
+      console.error(err);
     }
   };
 

@@ -1,22 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
-import supabase from "../../supabase/supabaseClient";
+import { initializeAuthState, checkUserStatus, handleAuthStateChange } from "../thunks/authThunks";
+import { AUTH_STATUS_CHECKED, AUTH_STATUS_HANDLED, AUTH_STATUS_INITIALIZED } from "../constants/authConstants";
 
 const initialState = {
   isLoggedin: false,
   isModalOpen: false,
+  user: null,
 };
 
 const authSlice = createSlice({
   initialState,
   name: "auth",
   reducers: {
-    login: (state) => {
+    login: (state, action) => {
       state.isLoggedin = true;
+      state.user = action.payload;
       localStorage.setItem("isLoggedin", "true");
+      localStorage.setItem("user", JSON.stringify(action.payload));
     },
     logout: (state) => {
       state.isLoggedin = false;
+      state.user = null;
       localStorage.removeItem("isLoggedin");
+      localStorage.removeItem("user");
     },
     openModal: (state) => {
       state.isModalOpen = true;
@@ -25,34 +31,19 @@ const authSlice = createSlice({
       state.isModalOpen = false;
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(initializeAuthState.fulfilled, (state) => {
+        state.status = AUTH_STATUS_INITIALIZED;
+      })
+      .addCase(checkUserStatus.fulfilled, (state) => {
+        state.status = AUTH_STATUS_CHECKED;
+      })
+      .addCase(handleAuthStateChange.fulfilled, (state) => {
+        state.status = AUTH_STATUS_HANDLED;
+      });
+  },
 });
-
-export const checkUserStatus = () => async (dispatch) => {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (user) {
-    dispatch(login());
-  } else {
-    dispatch(logout());
-  }
-  supabase.auth.onAuthStateChange((_, session) => {
-    if (session) {
-      dispatch(login());
-    } else {
-      dispatch(logout());
-    }
-  });
-};
-
-export const initializeAuthState = () => (dispatch) => {
-  const isLoggedin = localStorage.getItem("isLoggedin");
-  if (isLoggedin === "true") {
-    dispatch(login());
-  } else {
-    dispatch(logout());
-  }
-};
 
 export const { login, logout, openModal, closeModal } = authSlice.actions;
 export const authReducer = authSlice.reducer;
