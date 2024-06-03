@@ -20,7 +20,6 @@ export const signInWithEmail = async (email, password) => {
 
 export const signInWithOAuth = async (provider) => {
   const { data, error } = await supabase.auth.signInWithOAuth({ provider });
-  console.log("OAuth 로그인 확인", data, error);
   return { error };
 };
 

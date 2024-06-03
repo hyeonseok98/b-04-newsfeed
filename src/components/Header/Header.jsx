@@ -11,7 +11,6 @@ const Header = () => {
   const isLoggedin = useSelector((state) => state.auth.isLoggedin);
   const isModalOpen = useSelector((state) => state.auth.isModalOpen);
   const displayName = user?.user_metadata?.displayName;
-  console.log(user);
   const { handleSignOut } = useSignOut();
 
   useEffect(() => {
