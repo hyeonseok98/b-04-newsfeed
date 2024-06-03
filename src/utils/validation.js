@@ -8,7 +8,7 @@ export const validateCredentials = (credentials, isLoginPage) => {
   } else if (credentials.password.trim().length < 8) {
     errorMessage = "비밀번호는 최소 8자리여야 합니다.";
   }
-  if (!isLoginPage && credentials.nickname.trim().length < 2) {
+  if (!isLoginPage && credentials.displayName.trim().length < 2) {
     errorMessage = "두 자리 이상의 닉네임을 입력해주세요.";
   }
   return errorMessage;

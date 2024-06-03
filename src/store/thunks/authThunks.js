@@ -7,6 +7,16 @@ import {
   AUTH_HANDLE_AUTH_STATE_CHANGE,
 } from "../constants/authConstants";
 
+const setUserMetadata = (user) => {
+  const userMetadata = { ...user.user_metadata };
+
+  if (!userMetadata.displayName) {
+    userMetadata.displayName = userMetadata.name ?? "기본닉네임";
+  }
+
+  return { ...user, user_metadata: userMetadata };
+};
+
 export const initializeAuthState = createAsyncThunk(AUTH_INITIALIZE_AUTH_STATE, async (_, { dispatch }) => {
   const isLoggedin = localStorage.getItem("isLoggedin") === "true";
   const user = localStorage.getItem("user");
@@ -24,16 +34,19 @@ export const checkUserStatus = createAsyncThunk(AUTH_CHECK_USER_STATUS, async (_
     data: { user },
   } = await supabase.auth.getUser();
   if (user) {
-    dispatch(login(user));
+    const updatedUser = setUserMetadata(user);
+    dispatch(login(updatedUser));
   } else {
     dispatch(logout());
   }
 });
 
 export const handleAuthStateChange = createAsyncThunk(AUTH_HANDLE_AUTH_STATE_CHANGE, async (_, { dispatch }) => {
-  supabase.auth.onAuthStateChange((_, session) => {
+  supabase.auth.onAuthStateChange((event, session) => {
     if (session) {
-      dispatch(login(session.user));
+      const user = session.user;
+      const updatedUser = setUserMetadata(user);
+      dispatch(login(updatedUser));
     } else {
       dispatch(logout());
     }

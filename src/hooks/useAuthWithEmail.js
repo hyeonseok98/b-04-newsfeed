@@ -11,12 +11,10 @@ const useAuthWithEmail = () => {
 
   const handleAuthWithEmail = async (isSignIn = false, credentials) => {
     setStatus({ error: "", loading: true });
-    const { email, password, nickname } = credentials;
+    const { email, password, displayName } = credentials;
 
     try {
-      const { error, user } = isSignIn
-        ? await signInWithEmail(email, password)
-        : await signUp(email, password, nickname);
+      const { error } = isSignIn ? await signInWithEmail(email, password) : await signUp(email, password, displayName);
 
       if (error) {
         setStatus({ error: error.message, loading: false });

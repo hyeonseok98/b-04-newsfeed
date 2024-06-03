@@ -10,7 +10,7 @@ const Header = () => {
   const user = useSelector((state) => state.auth.user);
   const isLoggedin = useSelector((state) => state.auth.isLoggedin);
   const isModalOpen = useSelector((state) => state.auth.isModalOpen);
-  const nickname = user?.user_metadata?.nickname;
+  const displayName = user?.user_metadata?.displayName;
   console.log(user);
   const { handleSignOut } = useSignOut();
 
@@ -25,7 +25,7 @@ const Header = () => {
       {!isLoggedin && <button onClick={() => dispatch(openModal())}>Login</button>}
       {isLoggedin && <button onClick={handleSignOut}>Logout</button>}
       {isModalOpen && <AuthModal open={isModalOpen} />}
-      {nickname && <span>{nickname}</span>}
+      {displayName && <span>{displayName}</span>}
     </header>
   );
 };

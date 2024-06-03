@@ -1,12 +1,12 @@
 import { OAUTH_PROVIDERS } from "../../constants/constants";
-import useSignInwithOAuth from "../../hooks/useSignInwithOAuth";
+import useSignInWithOAuth from "../../hooks/useSignInWithOAuth";
 
 const SignInWithOAuth = () => {
-  const { handleSignInwithOAuth } = useSignInwithOAuth();
+  const { handleSignInWithOAuth } = useSignInWithOAuth();
   return (
     <>
-      <button onClick={() => handleSignInwithOAuth(OAUTH_PROVIDERS.GOOGLE)}>구글</button>
-      <button onClick={() => handleSignInwithOAuth(OAUTH_PROVIDERS.GITHUB)}>깃헙</button>
+      <button onClick={() => handleSignInWithOAuth(OAUTH_PROVIDERS.GOOGLE)}>구글</button>
+      <button onClick={() => handleSignInWithOAuth(OAUTH_PROVIDERS.GITHUB)}>깃헙</button>
     </>
   );
 };
