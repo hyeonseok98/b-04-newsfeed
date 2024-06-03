@@ -5,6 +5,40 @@ const GlobalStyle = createGlobalStyle`
     v2.0 | 20110126
     License: none (public domain)
   */
+    :root {
+      --white: #ffffff;
+      --black: #121212;
+      --white-background-color: #ffffff;
+      --black-background-color: #121212;
+      --primary-red-color: #E0012C;
+      --secondary-color: #FFBF00;
+
+
+      --color-black-10: #F4F2F2;
+      --color-black-20: #E9E5E6;
+      --color-black-30: #BFB9BB;
+      --color-black-40: #7F7A7C;
+      --color-black-50: #2A2829;
+      --color-black-60: #241D21;
+      --color-black-70: #1E141B;
+      --color-black-80: #180C16;
+      --color-black-90: #140712;
+
+      --color-red-10: #FDD4CA;
+      --color-red-20: #FBA097;
+      --color-red-30: #F56263;
+      --color-red-40: #EC3B4D;
+      --color-red-50: #E0012C;
+      --color-red-60: #C00037;
+      --color-red-70: #A1003E;
+      --color-red-80: #81003E;
+      --color-red-90: #6B003D;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -33,12 +67,9 @@ const GlobalStyle = createGlobalStyle`
     display: block;
   }
 
-  :root {
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+  html, body {
+    min-height: 100vh;
+  } 
 
   body {
     line-height: 1;

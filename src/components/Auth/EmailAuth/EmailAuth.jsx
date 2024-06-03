@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import useAuthWithEmail from "../../hooks/useAuthWithEmail";
-import { validateCredentials } from "../../utils/validation";
+import useAuthWithEmail from "../../../hooks/useAuthWithEmail";
+import { validateCredentials } from "../../../utils/validation";
 
 const initialCredentials = { email: "", password: "", displayName: "" };
 
@@ -18,7 +18,6 @@ const Login = ({ isLoginPage, togglePage }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(credentials);
     const validationError = validateCredentials(credentials, isLoginPage);
     if (validationError) {
       setErrorMessage(validationError);

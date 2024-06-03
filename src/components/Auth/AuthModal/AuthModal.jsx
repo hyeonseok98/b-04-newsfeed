@@ -3,7 +3,7 @@ import Login from "../EmailAuth/EmailAuth";
 import SignInWithOAuth from "../SignInWithOAuth/SignInWithOAuth";
 import { StDialog, StDiv } from "./AuthModal.styled";
 import { useDispatch } from "react-redux";
-import { closeModal } from "../../store/slices/authSlice";
+import { closeModal } from "../../../store/slices/authSlice";
 
 const AuthModal = ({ open }) => {
   const dispatch = useDispatch();

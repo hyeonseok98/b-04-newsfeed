@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeAuthState, checkUserStatus, handleAuthStateChange } from "../../store/thunks/authThunks";
 import { openModal } from "../../store/slices/authSlice";
-import AuthModal from "../AuthModal/AuthModal";
+import AuthModal from "../Auth/AuthModal/AuthModal";
 import useSignOut from "../../hooks/useSignOut";
 
 const Header = () => {
