@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import useAuthWithEmail from "../../../hooks/useAuthWithEmail";
+// import useAuthWithEmail from "../../../hooks/useAuthWithEmail";
 import { validateCredentials } from "../../../utils/validation";
+import { signInWithEmail, signUp } from "../../../supabase/auth";
 
 const initialCredentials = { email: "", password: "", displayName: "" };
 
 const Login = ({ isLoginPage, togglePage }) => {
   const [credentials, setCredentials] = useState(initialCredentials);
   const [errorMessage, setErrorMessage] = useState("");
-  const { handleAuthWithEmail } = useAuthWithEmail(isLoginPage);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setCredentials((credentials) => ({
@@ -23,15 +24,15 @@ const Login = ({ isLoginPage, togglePage }) => {
       setErrorMessage(validationError);
       return;
     }
-    handleAuthWithEmail(isLoginPage, credentials);
+    const { email, password, displayName } = credentials;
+    isLoginPage ? signInWithEmail(email, password) : signUp(email, password, displayName);
     setCredentials(initialCredentials);
   };
 
   useEffect(() => {
-    setErrorMessage("");
-    setCredentials(initialCredentials);
-  }, [isLoginPage]);
-
+    const isLoggedin = localStorage.getItem("isLoggedIn");
+    console.log(isLoggedin);
+  }, []);
   return (
     <form onSubmit={handleSubmit}>
       <h3>{isLoginPage ? "로그인" : "회원가입"}</h3>
