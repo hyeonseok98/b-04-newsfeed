@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../store/slices/authSlice";
 import { signOut } from "../supabase/auth";
@@ -12,18 +12,18 @@ const useSignOut = () => {
   const dispatch = useDispatch();
   const [status, setStatus] = useState(initialStatus);
 
-  const handleSignOut = async () => {
+  const handleSignOut = useCallback(async () => {
     setStatus({ error: "", loading: true });
     const { error } = await signOut();
     if (error) {
       setStatus({ error: error.message, loading: false });
-      alert(status.error);
+      alert(error.message);
     } else {
       dispatch(logout());
       alert("로그아웃 완료");
       setStatus(initialStatus);
     }
-  };
+  }, [dispatch]);
 
   return {
     handleSignOut,

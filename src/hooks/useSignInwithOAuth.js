@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { closeModal, login } from "../store/slices/authSlice";
 import { signInWithOAuth } from "../supabase/auth";
@@ -13,43 +13,45 @@ const useSignInWithOAuth = () => {
   const dispatch = useDispatch();
   const [status, setStatus] = useState(initialStatus);
 
-  const handleSignInWithOAuth = async (provider) => {
-    setStatus({ error: "", loading: true });
-    const { error, session } = await signInWithOAuth(provider);
+  const handleSignInWithOAuth = useCallback(
+    async (provider) => {
+      setStatus({ error: "", loading: true });
+      const { error, session } = await signInWithOAuth(provider);
 
-    if (error) {
-      setStatus({ error: error.message, loading: false });
-      alert(error.message);
-      return;
-    }
+      if (error) {
+        setStatus({ error: error.message, loading: false });
+        alert(error.message);
+        return;
+      }
 
-    if (!session) {
-      setTimeout(async () => {
-        const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+      if (!session) {
+        setTimeout(async () => {
+          const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
 
-        if (sessionError || !sessionData.session) {
-          setStatus({ error: sessionError?.message, loading: false });
-          alert(sessionError?.message);
-          return;
-        }
+          if (sessionError) {
+            setStatus({ error: sessionError?.message, loading: false });
+            alert(sessionError?.message);
+            return;
+          }
 
-        const user = sessionData.session.user;
+          const user = sessionData.session.user;
+          if (user) {
+            dispatch(login(user));
+            dispatch(closeModal());
+          }
+          setStatus({ error: "", loading: false });
+        }, 2000);
+      } else {
+        const user = session.user;
         if (user) {
           dispatch(login(user));
           dispatch(closeModal());
         }
-        console.log(session);
         setStatus({ error: "", loading: false });
-      }, 2000);
-    } else {
-      const user = session.user;
-      if (user) {
-        dispatch(login(user));
-        dispatch(closeModal());
       }
-      setStatus({ error: "", loading: false });
-    }
-  };
+    },
+    [dispatch],
+  );
 
   return {
     handleSignInWithOAuth,
