@@ -9,7 +9,6 @@ const DetailPage = () => {
   };
   return (
     <Container>
-      <Header />
       <Article>
         <Title>타이틀 제작, 상세페이지 뚝딱뚝딱 만들기</Title>
         <Subtitle>
@@ -106,12 +105,6 @@ const Container = styled.div`
   align-items: center;
   height: 100%;
   background-color: var(--color-black-10);
-`;
-
-const Header = styled.div`
-  width: 100%;
-  height: 68px;
-  background-color: var(--color-red-10);
 `;
 
 const Article = styled.article`
