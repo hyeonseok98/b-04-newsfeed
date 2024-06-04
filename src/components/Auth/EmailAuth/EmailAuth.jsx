@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { validateCredentials } from "../../../utils/validation";
 import useAuth from "../../../hooks/useAuth";
 import { EMAIL_SIGN_IN, EMAIL_SIGN_UP } from "../../../constants/constants";
@@ -29,6 +29,10 @@ const Login = ({ isLoginPage, togglePage }) => {
     await handleAuth(credentials);
     setCredentials(initialCredentials);
   };
+
+  useEffect(() => {
+    setCredentials(initialCredentials);
+  }, [isLoginPage]);
 
   return (
     <form onSubmit={handleSubmit}>
