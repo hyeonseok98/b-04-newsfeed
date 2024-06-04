@@ -56,7 +56,6 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 62.5%; /* 10px */
     font: inherit;
     vertical-align: baseline;
   }
@@ -69,6 +68,7 @@ const GlobalStyle = createGlobalStyle`
 
   html, body {
     min-height: 100vh;
+    font-size: 62.5%; /* 10px */
   } 
 
   body {

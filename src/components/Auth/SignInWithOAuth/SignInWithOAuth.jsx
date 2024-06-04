@@ -1,5 +1,5 @@
 import { OAUTH_PROVIDERS } from "../../../constants/constants";
-import useSignInWithOAuth from "../../../hooks/useSignInWithOAuth";
+import useSignInWithOAuth from "../../../hooks/useSignInwithOAuth";
 
 const SignInWithOAuth = () => {
   const { handleSignInWithOAuth } = useSignInWithOAuth();
