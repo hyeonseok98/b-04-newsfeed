@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Login from "../EmailAuth/EmailAuth";
+import EmailAuth from "../EmailAuth/EmailAuth";
 import SignInWithOAuth from "../SignInWithOAuth/SignInWithOAuth";
 import { StDialog, StDiv } from "./AuthModal.styled";
 import { useDispatch } from "react-redux";
@@ -17,7 +17,7 @@ const AuthModal = ({ open }) => {
   return (
     <StDiv onClick={handleClose}>
       <StDialog open={open}>
-        <Login isLoginPage={isLoginPage} togglePage={toggleModalPage} />
+        <EmailAuth isLoginPage={isLoginPage} togglePage={toggleModalPage} />
         {isLoginPage && <SignInWithOAuth />}
       </StDialog>
     </StDiv>
