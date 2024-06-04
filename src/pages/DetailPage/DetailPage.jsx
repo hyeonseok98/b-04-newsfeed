@@ -14,7 +14,7 @@ const DetailPage = () => {
         <Title>타이틀 제작, 상세페이지 뚝딱뚝딱 만들기</Title>
         <Subtitle>
           <div>
-            <span>velog </span>· 약 14시간 전
+            <span>nickname </span>· 약 14시간 전
           </div>
           <FollowButton>팔로우</FollowButton>
         </Subtitle>
@@ -80,6 +80,7 @@ const DetailPage = () => {
           nec ipsum id, euismod cursus dui. Nulla id tristique elit. Nam volutpat ornare velit.
         </Content>
         <UserInfoContainer>
+          <div>User Nickname 예정</div>
           <FollowButton>팔로우</FollowButton>
         </UserInfoContainer>
         <CommentContainer>
@@ -177,6 +178,11 @@ const UserInfoContainer = styled.div`
   width: 100%;
   height: 120px;
   margin: 20px 0;
+
+  div {
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
 `;
 
 const CommentContainer = styled.section`
@@ -222,7 +228,7 @@ const ButtonWrapper = styled.div`
     cursor: pointer;
 
     &:hover {
-      opacity: var(--color-red-10);
+      opacity: 0.8;
     }
   }
 `;
