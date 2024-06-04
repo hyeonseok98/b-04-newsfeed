@@ -17,11 +17,11 @@ const router = createBrowserRouter([
         path: "/detail/:id",
         element: <DetailPage />,
       },
-      {
-        path: "/write",
-        element: <NewPost />,
-      },
     ],
+  },
+  {
+    path: "/write",
+    element: <NewPost />,
   },
 ]);
 

@@ -51,7 +51,7 @@ function NewPost() {
   };
 
   const handleGoBack = () => {
-    navigator(-1);
+    navigator("/");
   };
 
   return (
