@@ -3,32 +3,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../../store/slices/authSlice";
 import AuthModal from "../Auth/AuthModal/AuthModal";
 import { StHeader } from "./Header.styled";
-import { signOut } from "../../supabase/auth";
+import useAuth from "../../hooks/useAuth";
+import { SIGN_OUT } from "../../constants/constants";
+import supabase from "../../supabase/supabaseClient";
+import { useNavigate } from "react-router-dom";
+import useAuthState from "../../hooks/useAuthState";
 
 const Header = () => {
+  const { handleAuth } = useAuth(SIGN_OUT);
   const dispatch = useDispatch();
-  // const user = useSelector((state) => state.auth.user);
-  // const isLoggedin = useSelector((state) => state.auth.isLoggedin);
   const isModalOpen = useSelector((state) => state.auth.isModalOpen);
-  // const displayName = user?.user_metadata?.displayName;
-  const [isLoggedin, setIsLoggedin] = useState(() => localStorage.getItem("isLoggedin") === "true");
-  useEffect(() => {
-    const handleStorageChange = () => {
-      setIsLoggedin(localStorage.getItem("isLoggedin") === "true");
-    };
+  const { isLoggedin, setIsLoggedin } = useAuthState();
 
-    window.addEventListener("storage", handleStorageChange);
+  const handleSignOut = async () => {
+    await handleAuth();
+    setIsLoggedin(false);
+  };
 
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, []);
   return (
     <StHeader>
       {!isLoggedin && <button onClick={() => dispatch(openModal())}>Login</button>}
-      {isLoggedin && <button onClick={signOut()}>Logout</button>}
+      {isLoggedin && <button onClick={handleSignOut}>Logout</button>}
       {isModalOpen && <AuthModal open={isModalOpen} />}
-      {/* {displayName && <span>{displayName}</span>} */}
     </StHeader>
   );
 };
