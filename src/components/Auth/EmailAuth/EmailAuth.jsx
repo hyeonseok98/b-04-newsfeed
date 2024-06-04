@@ -5,7 +5,7 @@ import { EMAIL_SIGN_IN, EMAIL_SIGN_UP } from "../../../constants/constants";
 
 const initialCredentials = { email: "", password: "", nickname: "" };
 
-const Login = ({ isLoginPage, togglePage }) => {
+const EmailAuth = ({ isLoginPage, togglePage }) => {
   const [credentials, setCredentials] = useState(initialCredentials);
   const [errorMessage, setErrorMessage] = useState("");
   const actionType = isLoginPage ? EMAIL_SIGN_IN : EMAIL_SIGN_UP;
@@ -47,4 +47,4 @@ const Login = ({ isLoginPage, togglePage }) => {
   );
 };
 
-export default Login;
+export default EmailAuth;

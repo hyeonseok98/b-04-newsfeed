@@ -31,7 +31,6 @@ export const signUp = async (email, password, nickname) => {
       nickname,
       user_name: userName,
     });
-    console.log({ insertError });
     if (insertError) {
       alert("테이블 업데이트 에러", insertError);
     } else {
