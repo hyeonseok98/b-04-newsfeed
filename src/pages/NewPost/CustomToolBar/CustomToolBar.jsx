@@ -25,9 +25,9 @@ const CustomToolbar = () => (
       <select className="ql-color" />
       <select className="ql-background" />
     </span>
-    <span className="ql-formats">
+    {/* <span className="ql-formats">
       <button className="ql-image" />
-    </span>
+    </span> */}
   </div>
 );
 
