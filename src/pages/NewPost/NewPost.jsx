@@ -59,8 +59,8 @@ function NewPost() {
 
     const title = titleRef.current.value;
     const content = quillRef.current.getEditor().getText();
-    // createPost({ user_id: USER_ID, title, contents });
-    // console.log(title, content, contents);
+    createPost({ user_id: USER_ID, title, contents });
+    console.log(title, content, contents);
     navigator("/write/preview");
   };
 
