@@ -1,19 +1,27 @@
 import { useRef } from "react";
 import styled from "styled-components";
+import useFetchPosts from "../../hooks/db/useFetchPosts";
+
+const USER_ID = "b7597b6f-8cb9-4965-a8eb-4d2fb416f3c5";
+const POST_ID = 7;
 
 const DetailPage = () => {
+  const { posts, loading } = useFetchPosts(USER_ID, POST_ID);
   const commentInputRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+
+  if (loading) return <div>Loading...</div>;
+
   return (
     <Container>
       <Article>
-        <Title>타이틀 제작, 상세페이지 뚝딱뚝딱 만들기</Title>
+        <Title>{posts.title}</Title>
         <Subtitle>
           <div>
-            <span>nickname </span>· 약 14시간 전
+            <span>{posts.nickname} </span>· 약 14시간 전
           </div>
           <FollowButton>팔로우</FollowButton>
         </Subtitle>
@@ -79,7 +87,7 @@ const DetailPage = () => {
           nec ipsum id, euismod cursus dui. Nulla id tristique elit. Nam volutpat ornare velit.
         </Content>
         <UserInfoContainer>
-          <div>User Nickname 예정</div>
+          <div>{posts.nickname}</div>
           <FollowButton>팔로우</FollowButton>
         </UserInfoContainer>
         <CommentContainer>

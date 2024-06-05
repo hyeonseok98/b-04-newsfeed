@@ -2,9 +2,10 @@ import { useMemo, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import usePosts from "../../hooks/db/usePosts";
 import CustomToolbar from "./CustomToolBar/CustomToolBar";
 
-const formats = [
+const FORMATS = [
   "font",
   "header",
   "bold",
@@ -23,10 +24,12 @@ const formats = [
 ];
 
 function NewPost() {
+  const navigator = useNavigate();
+  const { createPost } = usePosts();
+
   const [contents, setContents] = useState("");
   const quillRef = useRef(null);
   const titleRef = useRef(null);
-  const navigator = useNavigate();
 
   const modules = useMemo(() => {
     return {
@@ -45,9 +48,15 @@ function NewPost() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (quillRef.current) {
-      console.log(quillRef.current.getEditor().getText()); // 테스트용 console.log
+    if (!quillRef.current || !titleRef.current.value) {
+      alert("제목과 내용을 입력해주세요.");
+      return;
     }
+
+    const title = titleRef.current.value;
+    const contents = quillRef.current.getEditor().getText();
+    createPost({ user_id: "b7597b6f-8cb9-4965-a8eb-4d2fb416f3c5", title, contents });
+    alert("작성 완료.");
   };
 
   const handleGoBack = () => {
@@ -70,7 +79,7 @@ function NewPost() {
               }
             }}
             modules={modules}
-            formats={formats}
+            formats={FORMATS}
             value={contents}
             onChange={setContents}
             theme="snow"
