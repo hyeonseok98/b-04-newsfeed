@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import ReactQuill from "react-quill";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import usePosts from "../../hooks/db/usePosts";
 import CustomToolbar from "./CustomToolBar/CustomToolBar";
@@ -23,6 +23,8 @@ const FORMATS = [
   "size",
 ];
 
+const USER_ID = "b7597b6f-8cb9-4965-a8eb-4d2fb416f3c5";
+
 function NewPost() {
   const navigator = useNavigate();
   const { createPost } = usePosts();
@@ -30,7 +32,9 @@ function NewPost() {
   const [contents, setContents] = useState("");
   const quillRef = useRef(null);
   const titleRef = useRef(null);
+  const url = useParams();
 
+  console.log(url);
   const modules = useMemo(() => {
     return {
       toolbar: {
@@ -54,13 +58,16 @@ function NewPost() {
     }
 
     const title = titleRef.current.value;
-    const contents = quillRef.current.getEditor().getText();
-    createPost({ user_id: "b7597b6f-8cb9-4965-a8eb-4d2fb416f3c5", title, contents });
-    alert("작성 완료.");
+    const content = quillRef.current.getEditor().getText();
+    // createPost({ user_id: USER_ID, title, contents });
+    // console.log(title, content, contents);
+    navigator("/write/preview");
   };
 
   const handleGoBack = () => {
-    navigator("/");
+    if (window.confirm("정말 메인 페이지로 가시겠습니까? 컨텐츠는 저장되지 않습니다.")) {
+      navigator("/");
+    }
   };
 
   return (
@@ -87,8 +94,10 @@ function NewPost() {
           />
         </ContentWrapper>
         <ButtonWrapper>
-          <button onClick={handleGoBack}>이전</button>
-          <button>작성완료</button>
+          <button onClick={handleGoBack} type="button">
+            이전
+          </button>
+          <button type="submit">작성완료</button>
         </ButtonWrapper>
       </StForm>
     </Container>

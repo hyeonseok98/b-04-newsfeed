@@ -3,7 +3,7 @@ import styled from "styled-components";
 import useFetchPosts from "../../hooks/db/useFetchPosts";
 
 const USER_ID = "b7597b6f-8cb9-4965-a8eb-4d2fb416f3c5";
-const POST_ID = 7;
+const POST_ID = 9;
 
 const DetailPage = () => {
   const { posts, loading } = useFetchPosts(USER_ID, POST_ID);
@@ -25,67 +25,8 @@ const DetailPage = () => {
           </div>
           <FollowButton>팔로우</FollowButton>
         </Subtitle>
-        <Content>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra massa nec lectus consectetur, in
-          pharetra orci feugiat. Cras tincidunt dui sem, non semper ligula cursus a. Pellentesque condimentum venenatis
-          felis, et vehicula ipsum varius eu. Aenean iaculis pretium justo, scelerisque malesuada est ultrices at.
-          Suspendisse potenti. Nunc ultricies justo eu purus sollicitudin tempus. Pellentesque sagittis eros sit amet
-          est pellentesque lobortis. Etiam vehicula turpis sem, quis luctus nisi euismod vel. Cras blandit enim nec dui
-          posuere varius. Curabitur ultricies felis non lacus pellentesque, ac vehicula quam fringilla. Mauris eget sem
-          arcu. Proin euismod eu elit quis feugiat. Nullam viverra nunc vitae mauris dignissim, in varius nisi posuere.
-          Morbi faucibus, risus a tincidunt varius, justo ante posuere nibh, in tempus nunc tortor id tortor. Nulla eu
-          nulla sit amet elit porttitor posuere nec vitae mauris. Sed ultricies rhoncus velit vel rutrum. Nam
-          sollicitudin, neque a semper efficitur, massa mi lacinia urna, nec accumsan tellus ipsum ac mi. Curabitur quam
-          ipsum, pulvinar ac ultrices vel, cursus ut dui. Donec ac tellus pulvinar, laoreet arcu id, convallis magna.
-          Donec dignissim purus vel urna semper pharetra. Nullam ut nunc quam. Proin tincidunt sit amet ipsum nec
-          faucibus. Nam sed condimentum enim. Quisque molestie augue vitae tortor commodo, ut pulvinar diam venenatis.
-          Curabitur nec gravida elit. Praesent sollicitudin hendrerit felis, id tempor nulla faucibus in. Maecenas
-          accumsan tempus aliquam. Vivamus id cursus nunc, et pharetra orci. Quisque suscipit, urna ut consequat
-          aliquet, eros orci lobortis sapien, sed dignissim lectus lectus a nulla. Integer condimentum nec ante at
-          pulvinar. Proin eu feugiat sapien. Nam a ex id ipsum maximus consequat at eu ex. Sed ultricies consectetur
-          orci. Phasellus accumsan urna a pulvinar volutpat. Vivamus ut pretium lorem. Donec molestie mattis ipsum, in
-          commodo quam efficitur gravida. Morbi in bibendum leo. Aliquam sit amet nulla at massa viverra ultricies et at
-          urna. Phasellus non nibh in diam sagittis malesuada eu nec magna. Nullam dignissim sodales gravida. Etiam eget
-          lectus magna. Vivamus dignissim porta urna, a pretium ligula convallis vitae. Sed aliquam ligula eu nibh
-          mollis, at accumsan quam vehicula. Praesent volutpat at leo vitae ultricies. In tempus, mi nec aliquam
-          viverra, urna tellus porttitor leo, ac pretium sem purus at ante. Vivamus magna diam, mattis non lacus nec,
-          posuere pharetra ligula. Phasellus auctor scelerisque urna, at faucibus metus eleifend sit amet. Etiam varius
-          libero pharetra commodo elementum. Pellentesque diam nisi, volutpat in mi vel, sagittis sodales dolor. Fusce
-          pretium, purus in porta condimentum, ex tellus faucibus sapien, vel eleifend nisi diam sit amet magna. Quisque
-          et metus quis justo fringilla rhoncus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
-          ullamcorper ex auctor blandit tincidunt. Vivamus sed auctor nisi. Sed bibendum semper erat ac condimentum.
-          Aenean faucibus metus a scelerisque varius. Vestibulum erat dui, pharetra nec ipsum id, euismod cursus dui.
-          Nulla id tristique elit. Nam volutpat ornare velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Duis pharetra massa nec lectus consectetur, in pharetra orci feugiat. Cras tincidunt dui sem, non semper
-          ligula cursus a. Pellentesque condimentum venenatis felis, et vehicula ipsum varius eu. Aenean iaculis pretium
-          justo, scelerisque malesuada est ultrices at. Suspendisse potenti. Nunc ultricies justo eu purus sollicitudin
-          tempus. Pellentesque sagittis eros sit amet est pellentesque lobortis. Etiam vehicula turpis sem, quis luctus
-          nisi euismod vel. Cras blandit enim nec dui posuere varius. Curabitur ultricies felis non lacus pellentesque,
-          ac vehicula quam fringilla. Mauris eget sem arcu. Proin euismod eu elit quis feugiat. Nullam viverra nunc
-          vitae mauris dignissim, in varius nisi posuere. Morbi faucibus, risus a tincidunt varius, justo ante posuere
-          nibh, in tempus nunc tortor id tortor. Nulla eu nulla sit amet elit porttitor posuere nec vitae mauris. Sed
-          ultricies rhoncus velit vel rutrum. Nam sollicitudin, neque a semper efficitur, massa mi lacinia urna, nec
-          accumsan tellus ipsum ac mi. Curabitur quam ipsum, pulvinar ac ultrices vel, cursus ut dui. Donec ac tellus
-          pulvinar, laoreet arcu id, convallis magna. Donec dignissim purus vel urna semper pharetra. Nullam ut nunc
-          quam. Proin tincidunt sit amet ipsum nec faucibus. Nam sed condimentum enim. Quisque molestie augue vitae
-          tortor commodo, ut pulvinar diam venenatis. Curabitur nec gravida elit. Praesent sollicitudin hendrerit felis,
-          id tempor nulla faucibus in. Maecenas accumsan tempus aliquam. Vivamus id cursus nunc, et pharetra orci.
-          Quisque suscipit, urna ut consequat aliquet, eros orci lobortis sapien, sed dignissim lectus lectus a nulla.
-          Integer condimentum nec ante at pulvinar. Proin eu feugiat sapien. Nam a ex id ipsum maximus consequat at eu
-          ex. Sed ultricies consectetur orci. Phasellus accumsan urna a pulvinar volutpat. Vivamus ut pretium lorem.
-          Donec molestie mattis ipsum, in commodo quam efficitur gravida. Morbi in bibendum leo. Aliquam sit amet nulla
-          at massa viverra ultricies et at urna. Phasellus non nibh in diam sagittis malesuada eu nec magna. Nullam
-          dignissim sodales gravida. Etiam eget lectus magna. Vivamus dignissim porta urna, a pretium ligula convallis
-          vitae. Sed aliquam ligula eu nibh mollis, at accumsan quam vehicula. Praesent volutpat at leo vitae ultricies.
-          In tempus, mi nec aliquam viverra, urna tellus porttitor leo, ac pretium sem purus at ante. Vivamus magna
-          diam, mattis non lacus nec, posuere pharetra ligula. Phasellus auctor scelerisque urna, at faucibus metus
-          eleifend sit amet. Etiam varius libero pharetra commodo elementum. Pellentesque diam nisi, volutpat in mi vel,
-          sagittis sodales dolor. Fusce pretium, purus in porta condimentum, ex tellus faucibus sapien, vel eleifend
-          nisi diam sit amet magna. Quisque et metus quis justo fringilla rhoncus. Lorem ipsum dolor sit amet,
-          consectetur adipiscing elit. Duis ullamcorper ex auctor blandit tincidunt. Vivamus sed auctor nisi. Sed
-          bibendum semper erat ac condimentum. Aenean faucibus metus a scelerisque varius. Vestibulum erat dui, pharetra
-          nec ipsum id, euismod cursus dui. Nulla id tristique elit. Nam volutpat ornare velit.
-        </Content>
+        <Content dangerouslySetInnerHTML={{ __html: posts?.contents }} />
+
         <UserInfoContainer>
           <div>{posts.nickname}</div>
           <FollowButton>팔로우</FollowButton>
