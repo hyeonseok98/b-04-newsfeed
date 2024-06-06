@@ -3,7 +3,7 @@ import styled from "styled-components";
 import useFetchPosts from "../../hooks/db/useFetchPosts";
 
 const USER_ID = "b7597b6f-8cb9-4965-a8eb-4d2fb416f3c5";
-const POST_ID = 9;
+const POST_ID = 11;
 
 const DetailPage = () => {
   const { posts, loading } = useFetchPosts(USER_ID, POST_ID);

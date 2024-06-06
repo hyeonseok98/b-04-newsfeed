@@ -11,7 +11,6 @@ const useFetchPosts = (userId, postId) => {
     setLoading(true);
     try {
       const { data, error } = await supabase.from("post").select("*").eq("user_id", userId).eq("id", postId).single();
-      console.log(data);
       if (error) {
         console.error("Fetch posts error:", error);
       } else {

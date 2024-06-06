@@ -2,18 +2,29 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import dropbox from "../../assets/images/dropbox.png";
+import usePosts from "../../hooks/db/usePosts";
+import uploadImg from "../../utils/uploadImg";
 
 const TEXT_LENGTH = 150;
+const USER_ID = "b7597b6f-8cb9-4965-a8eb-4d2fb416f3c5";
+const NICK_NAME = "i'am tester";
+const POST_ID = 16;
 
 function AddPreview() {
-  const navigator = useNavigate();
+  const navigate = useNavigate();
+  const { createPost } = usePosts();
+
+  const title = sessionStorage.getItem("title");
+  const contents = sessionStorage.getItem("contents");
 
   const [isActive, setActive] = useState(false);
-  const [preview, setPreview] = useState(null);
+  const [previewImg, setPreviewImg] = useState(null);
+  const [previewImgData, setPreviewImgData] = useState("");
   const [text, setText] = useState("");
 
   const handleToggleActive = () => setActive(!isActive);
 
+  // 이미지 파일 drag&drop을 위한 함수
   const handleDragOver = (event) => {
     event.preventDefault();
   };
@@ -21,19 +32,22 @@ function AddPreview() {
   const handleDrop = (event) => {
     event.preventDefault();
     setActive(false);
+
     const file = event.dataTransfer.files[0];
+    setPreviewImgData(file);
     if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
-      reader.onload = (e) => setPreview(e.target.result);
+      reader.onload = (e) => setPreviewImg(e.target.result);
       reader.readAsDataURL(file);
     }
   };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
+    setPreviewImgData(file);
     if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
-      reader.onload = (e) => setPreview(e.target.result);
+      reader.onload = (e) => setPreviewImg(e.target.result);
       reader.readAsDataURL(file);
     }
   };
@@ -47,8 +61,27 @@ function AddPreview() {
 
   const handleGoBack = () => {
     if (window.confirm("정말 뒤로 가시겠습니까? 컨텐츠는 저장되지 않습니다.")) {
-      navigator(-1);
+      navigate(-1);
     }
+  };
+
+  const handlePublish = async () => {
+    let imgUrl = null;
+    if (previewImgData) {
+      imgUrl = await uploadImg(previewImgData, USER_ID, POST_ID, "thumbnail");
+    }
+
+    await createPost({
+      user_id: USER_ID,
+      title,
+      contents,
+      nickname: NICK_NAME,
+      img: imgUrl,
+      description: text,
+    });
+    alert("작성한 글이 저장되었습니다.");
+    sessionStorage.clear();
+    navigate("/");
   };
 
   return (
@@ -61,20 +94,20 @@ function AddPreview() {
             </div>
 
             <ImgInputWrapper
-              isActive={isActive}
+              $isActive={isActive}
               onDragEnter={handleToggleActive}
               onDragLeave={handleToggleActive}
               onDragOver={handleDragOver}
               onDrop={handleDrop}
             >
               <input type="file" onChange={handleFileChange} />
-              {preview ? (
-                <PreviewImage src={preview} alt="미리보기 이미지" />
+              {previewImg ? (
+                <PreviewImage src={previewImg} alt="미리보기 이미지" />
               ) : (
                 <DropImg src={dropbox} alt="이미지를 여기에 놓아주세요" />
               )}
-              {!preview && <h4>클릭하거나 파일을 이곳에 드롭하세요</h4>}
-              {!preview && <h5>이미지 파일만 가능합니다</h5>}
+              {!previewImg && <h4>클릭하거나 파일을 이곳에 드롭하세요.</h4>}
+              {!previewImg && <h5>최대 5MB의 이미지 파일만 가능</h5>}
             </ImgInputWrapper>
             <TextAreaWraaper>
               <Textarea value={text} onChange={handleTextChange} placeholder="당신의 포스트를 짧게 소개해보세요." />
@@ -87,7 +120,9 @@ function AddPreview() {
               <button onClick={handleGoBack} type="button">
                 이전
               </button>
-              <button type="submit">출간하기</button>
+              <button onClick={handlePublish} type="submit">
+                출간하기
+              </button>
             </ButtonWrapper>
           </StDiv>
         </PreviewSection>
@@ -140,8 +175,8 @@ const ImgInputWrapper = styled.label`
   align-items: center;
   width: 100%;
   height: 300px;
-  background-color: ${({ isActive }) => (isActive ? "var(--color-black-20)" : "transparent")};
-  border: 2px dashed ${({ isActive }) => (isActive ? "var(--secondary-color)" : "var(--color-black-30)")};
+  background-color: ${({ $isActive }) => ($isActive ? "var(--color-black-20)" : "transparent")};
+  border: 2px dashed ${({ $isActive }) => ($isActive ? "var(--secondary-color)" : "var(--color-black-30)")};
   cursor: pointer;
 
   input {

@@ -1,8 +1,7 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ReactQuill from "react-quill";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import usePosts from "../../hooks/db/usePosts";
 import CustomToolbar from "./CustomToolBar/CustomToolBar";
 
 const FORMATS = [
@@ -23,18 +22,29 @@ const FORMATS = [
   "size",
 ];
 
-const USER_ID = "b7597b6f-8cb9-4965-a8eb-4d2fb416f3c5";
-
 function NewPost() {
-  const navigator = useNavigate();
-  const { createPost } = usePosts();
+  const navigate = useNavigate();
 
-  const [contents, setContents] = useState("");
   const quillRef = useRef(null);
   const titleRef = useRef(null);
-  const url = useParams();
 
-  console.log(url);
+  const [title, setTitle] = useState(() => sessionStorage.getItem("title") || "");
+  const [contents, setContents] = useState(() => sessionStorage.getItem("contents") || "");
+
+  // 새로고침 혹은 페이지를 떠날 때 작동하는 event(세션 스토리지 비움)
+  useEffect(() => {
+    const handleBeforeUnmount = () => {
+      sessionStorage.removeItem("contents");
+      sessionStorage.removeItem("title");
+    };
+
+    window.addEventListener("handleBeforeUnmount", handleBeforeUnmount);
+
+    return () => {
+      window.removeEventListener("handleBeforeUnmount", handleBeforeUnmount);
+    };
+  }, []);
+
   const modules = useMemo(() => {
     return {
       toolbar: {
@@ -50,6 +60,18 @@ function NewPost() {
     }
   };
 
+  const handleTitleChange = (e) => {
+    const value = e.target.value;
+    setTitle(value);
+    sessionStorage.setItem("title", value);
+    handleResizeHeight();
+  };
+
+  const handleContentsChange = (value) => {
+    setContents(value);
+    sessionStorage.setItem("contents", value);
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (!quillRef.current || !titleRef.current.value) {
@@ -57,16 +79,12 @@ function NewPost() {
       return;
     }
 
-    const title = titleRef.current.value;
-    const content = quillRef.current.getEditor().getText();
-    createPost({ user_id: USER_ID, title, contents });
-    console.log(title, content, contents);
-    navigator("/write/preview");
+    navigate("/write/preview");
   };
 
   const handleGoBack = () => {
     if (window.confirm("정말 메인 페이지로 가시겠습니까? 컨텐츠는 저장되지 않습니다.")) {
-      navigator("/");
+      navigate("/");
     }
   };
 
@@ -74,7 +92,13 @@ function NewPost() {
     <Container>
       <StForm onSubmit={onSubmit}>
         <div>
-          <TitleArea placeholder="제목을 입력하세요" ref={titleRef} onChange={handleResizeHeight} rows={1} />
+          <TitleArea
+            placeholder="제목을 입력하세요"
+            ref={titleRef}
+            value={title}
+            onChange={handleTitleChange}
+            rows={1}
+          />
           <hr />
         </div>
         <ContentWrapper>
@@ -88,7 +112,7 @@ function NewPost() {
             modules={modules}
             formats={FORMATS}
             value={contents}
-            onChange={setContents}
+            onChange={handleContentsChange}
             theme="snow"
             placeholder="내용을 입력해주세요"
           />
