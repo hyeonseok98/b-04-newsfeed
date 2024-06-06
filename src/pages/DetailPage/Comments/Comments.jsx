@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import defaultProfile from "../../../assets/images/default-profile.jpg";
 import useComments from "../../../hooks/db/useComments";
 import supabase from "../../../supabase/supabaseClient";
+import timeFormatter from "../../../utils/timeFormatter";
 
 const Comments = ({ postId }) => {
   const { createComment, updateComment, deleteComment } = useComments();
@@ -67,7 +69,11 @@ const Comments = ({ postId }) => {
   return (
     <CommentContainer>
       <CommentForm onSubmit={handleCommentSubmit}>
-        <textarea ref={newCommentRef} placeholder="댓글을 작성하세요" />
+        <textarea
+          ref={newCommentRef}
+          placeholder={user ? "댓글을 작성하세요" : "로그인 후 사용 가능합니다."}
+          disabled={!user}
+        />
         <ButtonWrapper>
           <button type="submit">댓글 작성</button>
         </ButtonWrapper>
@@ -79,10 +85,10 @@ const Comments = ({ postId }) => {
         comments.map((comment) => (
           <CommentItem key={comment.comment_id}>
             <CommentHeader>
-              <ProfileImage src={`https://api.adorable.io/avatars/40/${comment.user_id}.png`} alt="User profile" />
+              <ProfileImage src={defaultProfile} alt="User profile" />
               <CommentInfo>
                 <Nickname>{comment.nickname}</Nickname>
-                <Date>14시간전</Date>
+                <Date>{timeFormatter(comment.created_at)}</Date>
               </CommentInfo>
               {user && comment.user_id === user.id && (
                 <EditWrapper>
@@ -158,12 +164,13 @@ const ProfileImage = styled.img`
   height: 40px;
   border-radius: 50%;
   margin-right: 10px;
+  margin-bottom: 6px;
 `;
 
 const CommentInfo = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   margin: 10px 0;
 `;
 
@@ -177,6 +184,7 @@ const EditWrapper = styled.div`
 
   span {
     &:hover {
+      font-weight: 600;
       color: var(--color-black-60);
     }
   }

@@ -2,7 +2,9 @@ import DOMPurify from "dompurify";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import defaultProfile from "../../assets/images/default-profile.jpg";
 import useFetchPosts from "../../hooks/db/useFetchPosts";
+import timeFormatter from "../../utils/timeFormatter";
 import Comments from "./Comments/Comments";
 
 const DetailPage = () => {
@@ -24,7 +26,7 @@ const DetailPage = () => {
         <Title>{posts.title}</Title>
         <Subtitle>
           <div>
-            <span>{posts.nickname} </span>· 약 14시간 전
+            <span>{posts.nickname} </span>· <span>{timeFormatter(posts.created_at)}</span>
           </div>
           <FollowButton>팔로우</FollowButton>
         </Subtitle>
@@ -32,7 +34,10 @@ const DetailPage = () => {
         {typeof window !== "undefined" && <Content dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />}
 
         <UserInfoContainer>
-          <div>{posts.nickname}</div>
+          <UserInfoWrapper>
+            <ProfileImage src={defaultProfile} alt="User profile" />
+            <span>{posts.nickname}</span>
+          </UserInfoWrapper>
           <FollowButton>팔로우</FollowButton>
         </UserInfoContainer>
         <Comments postId={POST_ID} />
@@ -77,13 +82,18 @@ const Subtitle = styled.div`
   display: flex;
   justify-content: space-between;
   font-size: 1.6rem;
-  color: #777;
+  color: var(--color-black-40);
   margin: 10px 0px 20px 0;
   text-align: start;
 
   span {
-    color: var(--black);
-    font-weight: 600;
+    &:nth-child(1) {
+      color: var(--black);
+      font-weight: 600;
+    }
+    &:nth-child(2) {
+      font-size: 1.4rem;
+    }
   }
 `;
 
@@ -145,9 +155,21 @@ const UserInfoContainer = styled.div`
   height: 120px;
   margin: 40px 0;
   border-bottom: 1px solid var(--color-black-20);
+`;
 
-  div {
+const UserInfoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  span {
     font-size: 2rem;
     font-weight: 600;
   }
+`;
+
+const ProfileImage = styled.img`
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 20px;
 `;

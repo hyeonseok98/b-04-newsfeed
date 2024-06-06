@@ -38,7 +38,7 @@ const UserPosts = ({ searchQuery, sortBy }) => {
   const handleMoveDetailPage = (postId) => {
     navigate(`/detail/${postId}`);
   };
-  console.log(visiblePosts);
+
   return (
     <StFetchList>
       {visiblePosts.length > 0 ? (
