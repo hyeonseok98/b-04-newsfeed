@@ -3,13 +3,16 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isLoggedin: false,
   isModalOpen: false,
-  user: null,
+  user: JSON.parse(localStorage.getItem("user") ?? null),
 };
 
 const authSlice = createSlice({
   initialState,
   name: "auth",
   reducers: {
+    setUser: (state, action) => {
+      state.user = action.payload;
+    },
     openModal: (state) => {
       state.isModalOpen = true;
     },
@@ -19,5 +22,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { openModal, closeModal } = authSlice.actions;
+export const { setUser, openModal, closeModal } = authSlice.actions;
 export const authReducer = authSlice.reducer;

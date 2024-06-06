@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import supabase from "../supabase/supabaseClient";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../store/slices/authSlice";
 
 const useAuthState = () => {
   const [isLoggedin, setIsLoggedin] = useState(() => localStorage.getItem("isLoggedin") === "true");
-  const [user, setUser] = useState();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchUserById = async (id) => {
@@ -42,15 +44,15 @@ const useAuthState = () => {
 
           if (!existingUser) {
             await insertSocialUser(sessionUser);
-            setUser(await fetchUserById(sessionUser.id));
+            dispatch(setUser(await fetchUserById(sessionUser.id)));
           }
 
           if (existingUser) {
-            setUser(existingUser);
+            dispatch(setUser(existingUser));
             console.log(existingUser);
           }
         } else {
-          setUser(await fetchUserById(sessionUser.id));
+          dispatch(setUser(await fetchUserById(sessionUser.id)));
         }
       }
     };
@@ -59,13 +61,13 @@ const useAuthState = () => {
       if (session) {
         setIsLoggedin(true);
         localStorage.setItem("isLoggedin", "true");
-        localStorage.setItem("user", JSON.stringify(session.user)); // user 값을 로컬스토리지로 불러오는 부분 로직 변경 후 삭제
+        localStorage.setItem("user", JSON.stringify(session.user));
         // await getSessionAndHandleUser();   이 줄의 코드는 지워질 코드이지만 확인할게 있어 남겨두었습니다. 확인 후 삭제하겠습니다
       } else {
         localStorage.removeItem("isLoggedin");
-        localStorage.removeItem("user"); // user 값을 로컬스토리지로 불러오는 부분 로직 변경 후 삭제
+        localStorage.removeItem("user");
         setIsLoggedin(false);
-        setUser(null);
+        dispatch(setUser(null));
       }
     });
 
@@ -76,7 +78,7 @@ const useAuthState = () => {
     return () => authListener.subscription.unsubscribe();
   }, [isLoggedin]);
 
-  return { isLoggedin, user };
+  return { isLoggedin };
 };
 
 export default useAuthState;

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../../store/slices/authSlice";
-import AuthModal from "../Auth/AuthModal/AuthModal";
+import AuthModal from "../Auth/AuthModal";
 import { StHeader } from "./Header.styled";
 import useAuth from "../../hooks/useAuth";
 import { SIGN_OUT } from "../../constants/constants";
@@ -11,6 +11,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const isModalOpen = useSelector((state) => state.auth.isModalOpen);
   const { isLoggedin } = useAuthState();
+
   return (
     <StHeader>
       {!isLoggedin && <button onClick={() => dispatch(openModal())}>Login</button>}
