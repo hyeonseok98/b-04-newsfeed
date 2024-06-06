@@ -1,31 +1,21 @@
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { initializeAuthState, checkUserStatus, handleAuthStateChange } from "../../store/thunks/authThunks";
 import { openModal } from "../../store/slices/authSlice";
 import AuthModal from "../Auth/AuthModal/AuthModal";
-import useSignOut from "../../hooks/useSignOut";
 import { StHeader } from "./Header.styled";
+import useAuth from "../../hooks/useAuth";
+import { SIGN_OUT } from "../../constants/constants";
+import useAuthState from "../../hooks/useAuthState";
 
 const Header = () => {
+  const { handleAuth } = useAuth(SIGN_OUT);
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user);
-  const isLoggedin = useSelector((state) => state.auth.isLoggedin);
   const isModalOpen = useSelector((state) => state.auth.isModalOpen);
-  const displayName = user?.user_metadata?.displayName;
-  const { handleSignOut } = useSignOut();
-
-  useEffect(() => {
-    dispatch(initializeAuthState());
-    dispatch(checkUserStatus());
-    dispatch(handleAuthStateChange());
-  }, [dispatch]);
-
+  const { isLoggedin } = useAuthState();
   return (
     <StHeader>
       {!isLoggedin && <button onClick={() => dispatch(openModal())}>Login</button>}
-      {isLoggedin && <button onClick={handleSignOut}>Logout</button>}
+      {isLoggedin && <button onClick={handleAuth}>Logout</button>}
       {isModalOpen && <AuthModal open={isModalOpen} />}
-      {displayName && <span>{displayName}</span>}
     </StHeader>
   );
 };
