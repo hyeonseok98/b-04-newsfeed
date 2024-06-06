@@ -62,21 +62,18 @@ function NewPost() {
       }
 
       const publicUrl = imageUrl.data.publicUrl;
-      console.log("Image URL: ", publicUrl);
 
       const quillEditor = quillRef.current.getEditor();
-      let range = quillEditor.getSelection(); // 현재 커서 위치 파악
+      let range = quillEditor.getSelection();
 
       if (!range) {
         range = {
-          index: quillEditor.getLength(), // 커서 위치가 없으면 문서 끝에 삽입
+          index: quillEditor.getLength(),
           length: 0,
         };
       }
 
-      console.log("Inserting image at range: ", range);
-
-      quillEditor.insertEmbed(range.index, "image", publicUrl); // 올바른 URL 전달
+      quillEditor.insertEmbed(range.index, "image", publicUrl);
       quillEditor.setSelection(range.index + 1, 0); // 커서를 이미지 다음으로 이동
     };
   };
@@ -148,11 +145,7 @@ function NewPost() {
         <ContentWrapper>
           <CustomToolbar />
           <StyledReactQuill
-            ref={(element) => {
-              if (element !== null) {
-                quillRef.current = element;
-              }
-            }}
+            ref={quillRef}
             modules={modules}
             formats={FORMATS}
             value={contents}

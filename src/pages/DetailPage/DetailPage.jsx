@@ -1,7 +1,8 @@
 import DOMPurify from "dompurify";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import useFetchPosts from "../../hooks/db/useFetchPosts";
+import Comments from "./Comments/Comments";
 
 const USER_ID = "b7597b6f-8cb9-4965-a8eb-4d2fb416f3c5";
 const POST_ID = 23;
@@ -9,8 +10,7 @@ const POST_ID = 23;
 const DetailPage = () => {
   const { posts, loading } = useFetchPosts(USER_ID, POST_ID);
   const [sanitizedHTML, setSanitizedHTML] = useState("");
-  console.log(posts);
-  const commentInputRef = useRef();
+  // const commentInputRef = useRef();
 
   useEffect(() => {
     if (posts?.contents) {
@@ -18,9 +18,9 @@ const DetailPage = () => {
     }
   }, [posts]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  // };
 
   if (loading) return <div>Loading...</div>;
 
@@ -41,15 +41,7 @@ const DetailPage = () => {
           <div>{posts.nickname}</div>
           <FollowButton>팔로우</FollowButton>
         </UserInfoContainer>
-        <CommentContainer>
-          <StForm onSubmit={handleSubmit}>
-            <div>n개의 댓글</div>
-            <textarea type="text" ref={commentInputRef} placeholder="댓글을 작성하세요"></textarea>
-            <ButtonWrapper>
-              <button>댓글 작성</button>
-            </ButtonWrapper>
-          </StForm>
-        </CommentContainer>
+        <Comments postId={POST_ID} />
       </Article>
     </Container>
   );
@@ -125,14 +117,29 @@ const Content = styled.div`
   strong {
     font-weight: bold;
   }
+
   .ql-size-small {
     font-size: 0.75rem;
   }
+
   .ql-size-large {
     font-size: 1.5rem;
   }
+
   .ql-size-huge {
     font-size: 2.5rem;
+  }
+
+  .ql-align-center {
+    text-align: center;
+  }
+
+  .ql-align-right {
+    text-align: right;
+  }
+
+  .ql-align-justify {
+    text-align: justify;
   }
 `;
 
@@ -148,53 +155,5 @@ const UserInfoContainer = styled.div`
   div {
     font-size: 2rem;
     font-weight: 600;
-  }
-`;
-
-const CommentContainer = styled.section`
-  width: 100%;
-`;
-
-const StForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  row-gap: 20px;
-
-  div {
-    font-size: 1.8rem;
-    font-weight: 600;
-  }
-
-  textarea {
-    width: 100%;
-    max-width: 728px;
-    height: 120px;
-    padding: 20px;
-    border: 1px solid var(--color-black-20);
-    border-radius: 0.4rem;
-    outline: none;
-    resize: none;
-    font-size: 1.6rem;
-    line-height: 1.75;
-  }
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-
-  button {
-    width: 110px;
-    height: 32px;
-    padding: 0 2rem;
-    border: none;
-    border-radius: 0.4rem;
-    background-color: var(--secondary-color);
-    font-weight: 600;
-    cursor: pointer;
-
-    &:hover {
-      opacity: 0.8;
-    }
   }
 `;
