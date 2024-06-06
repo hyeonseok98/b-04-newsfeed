@@ -6,7 +6,6 @@ import { setUser } from "../store/slices/authSlice";
 const useAuthState = () => {
   const [isLoggedin, setIsLoggedin] = useState(() => localStorage.getItem("isLoggedin") === "true");
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     const fetchUserById = async (id) => {
@@ -79,7 +78,7 @@ const useAuthState = () => {
     return () => authListener.subscription.unsubscribe();
   }, [isLoggedin]);
 
-  return { isLoggedin, user };
+  return { isLoggedin };
 };
 
 export default useAuthState;

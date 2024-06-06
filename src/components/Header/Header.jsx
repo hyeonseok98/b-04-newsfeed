@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../../store/slices/authSlice";
-import AuthModal from "../Auth/AuthModal/AuthModal";
+import AuthModal from "../Auth/AuthModal";
 import { StHeader } from "./Header.styled";
 import useAuth from "../../hooks/useAuth";
 import { SIGN_OUT } from "../../constants/constants";
