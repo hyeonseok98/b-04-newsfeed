@@ -61,8 +61,7 @@ const StDialog = styled.dialog`
 
 const Container = styled.div`
   width: 90%;
-  display: flex;
-  flex-direction: column;
+  text-align: center;
 `;
 
 const Title = styled.h3`
