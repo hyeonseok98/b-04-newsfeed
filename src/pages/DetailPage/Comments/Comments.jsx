@@ -12,7 +12,7 @@ const Comments = ({ postId }) => {
   const [loading, setLoading] = useState(true);
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editingContent, setEditingContent] = useState("");
-  const newCommentRef = useRef();
+  const commentRef = useRef();
   const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
@@ -37,14 +37,15 @@ const Comments = ({ postId }) => {
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
+    if (commentRef.current.value.trim() === "") return;
     const newCommentData = {
       post_id: postId,
       user_id: user.id,
       nickname: user.nickname,
-      comments: newCommentRef.current.value,
+      comments: commentRef.current.value,
     };
     await createComment(newCommentData);
-    newCommentRef.current.value = "";
+    commentRef.current.value = "";
     fetchComments();
   };
 
@@ -55,6 +56,7 @@ const Comments = ({ postId }) => {
 
   const handleCommentUpdate = async (e, comment_Id) => {
     e.preventDefault();
+    if (editingContent.trim() === "") return;
     await updateComment(comment_Id, { comments: editingContent });
     setEditingCommentId(null);
     setEditingContent("");
@@ -70,7 +72,7 @@ const Comments = ({ postId }) => {
     <CommentContainer>
       <CommentForm onSubmit={handleCommentSubmit}>
         <textarea
-          ref={newCommentRef}
+          ref={commentRef}
           placeholder={user ? "댓글을 작성하세요" : "로그인 후 사용 가능합니다."}
           disabled={!user}
         />
@@ -100,7 +102,11 @@ const Comments = ({ postId }) => {
 
             {editingCommentId === comment.comment_id ? (
               <Form onSubmit={(e) => handleCommentUpdate(e, comment.comment_id)}>
-                <textarea value={editingContent} onChange={(e) => setEditingContent(e.target.value)} />
+                <textarea
+                  value={editingContent}
+                  onChange={(e) => setEditingContent(e.target.value)}
+                  placeholder="수정할 댓글을 입력하세요"
+                />
                 <ButtonWrapper>
                   <button type="submit">수정 완료</button>
                   <button type="button" onClick={() => setEditingCommentId(null)}>

@@ -1,7 +1,7 @@
 function timeFormatter(createdAt) {
   const now = new Date();
   const createdTime = new Date(createdAt);
-  const diffMilliseconds = now - createdTime;
+  const diffMilliseconds = Math.abs(now - createdTime);
 
   const diffSeconds = Math.floor(diffMilliseconds / 1000);
   const diffMinutes = Math.floor(diffMilliseconds / (1000 * 60));
