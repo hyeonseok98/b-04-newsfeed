@@ -1,5 +1,5 @@
-const useFind = (data, searchQuery) => {
-  if (!data || !searchQuery) {
+const useDataFilterByQuery = (data, searchQuery) => {
+  if (!data || !searchQuery || data.length === 0) {
     return data;
   }
 
@@ -8,12 +8,13 @@ const useFind = (data, searchQuery) => {
   return data.filter((item) => {
     const title = item.title ? item.title.toLowerCase() : "";
     const description = item.description ? item.description.toLowerCase() : "";
+    const genre = item.genre ? item.genre.toLowerCase() : "";
 
-    return title.includes(lowerCaseQuery) || description.includes(lowerCaseQuery);
+    return title.includes(lowerCaseQuery) || description.includes(lowerCaseQuery) || genre.includes(lowerCaseQuery);
   });
 };
 
-export default useFind;
+export default useDataFilterByQuery;
 
 // import { useEffect, useState } from "react";
 
