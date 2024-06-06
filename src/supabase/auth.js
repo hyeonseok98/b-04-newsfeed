@@ -40,7 +40,7 @@ export const signUp = async (email, password, nickname) => {
   }
 };
 export const signInWithEmail = async (email, password) => {
-  const { data: user, error: userError } = await supabase.from("User").select("id").eq("email", email).single();
+  const { error: userError } = await supabase.from("User").select("id").eq("email", email).single();
   if (userError) {
     console.log("사용자 조회 에러", userError.message);
     alert("회원가입이 필요합니다.");

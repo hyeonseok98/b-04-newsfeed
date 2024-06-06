@@ -14,12 +14,19 @@ const CustomToolbar = () => (
       <button className="ql-blockquote" />
     </span>
     <span className="ql-formats">
+      <button className="ql-align" value="" />
+      <button className="ql-align" value="center" />
+      <button className="ql-align" value="right" />
+      <button className="ql-align" value="justify" />
+    </span>
+    <span className="ql-formats">
       <select className="ql-color" />
       <select className="ql-background" />
     </span>
-    <span className="ql-formats">
+
+    {/* <span className="ql-formats">
       <button className="ql-image" />
-    </span>
+    </span> */}
   </div>
 );
 

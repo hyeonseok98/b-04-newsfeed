@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useFetchAllPosts from "../hooks/db/useFetchAllPosts";
 import useDataFilterByQuery from "../hooks/useDataFilterByQuery";
 import useInfinityScroll from "../hooks/useInfinityScroll"; // useInfinityScroll 훅 추가
 
 const UserPosts = ({ searchQuery, sortBy }) => {
-  const { posts } = useFetchAllPosts();
+  const navigate = useNavigate();
+  const { posts, loading } = useFetchAllPosts();
   const [visiblePosts, setVisiblePosts] = useState([]);
 
   // 필터링된 데이터를 상태에 저장
@@ -31,15 +33,21 @@ const UserPosts = ({ searchQuery, sortBy }) => {
     });
   });
 
+  if (loading) return <div>Loading...</div>;
+
+  const handleMoveDetailPage = (postId) => {
+    navigate(`/detail/${postId}`);
+  };
+
   return (
     <StFetchList>
       {visiblePosts.length > 0 ? (
-        visiblePosts.map((item) => (
-          <StCard key={item.id}>
-            <h2>{item.title}</h2>
-            <h4>{item.nickname}</h4>
-            {item.img && <img src={item.img} alt={item.title} />}
-            <h3>{item.description}</h3>
+        visiblePosts.map((post) => (
+          <StCard key={post.id} onClick={() => handleMoveDetailPage(post.id)}>
+            <h2>{post.title}</h2>
+            <h4>{post.nickname}</h4>
+            {post.img && <img src={post.img} alt={post.title} />}
+            <h3>{post.description}</h3>
           </StCard>
         ))
       ) : (
@@ -76,6 +84,7 @@ const StCard = styled.div`
   height: 500px;
   position: relative;
   font-size: 2rem;
+  cursor: pointer;
 
   &:nth-child(odd) {
     margin-top: 50px;
