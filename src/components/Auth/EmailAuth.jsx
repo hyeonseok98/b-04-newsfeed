@@ -22,7 +22,7 @@ const EmailAuth = ({ isLoginPage }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const isValid = validateCredentials(credentials, isLoginPage, setErrorMessage);
+    const isValid = await validateCredentials(credentials, isLoginPage, setErrorMessage);
     if (!isValid) {
       return;
     }

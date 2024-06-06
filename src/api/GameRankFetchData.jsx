@@ -1,65 +1,75 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import useFind from "../hooks/useFind"; // useSearch로 이름 지은 훅이 임포트시에 에러나서 바꿨습니다 //
+import useDataFilterByQuery from "../hooks/useDataFilterByQuery";
+import usePagination from "../hooks/usePagination"; // 커스텀 훅 추가
+import GameInfoModal from "../pages/HomePage/GameInfoModal";
+import Pagination from "../pages/HomePage/Pagination";
+import { setGames, setLoading, setSelectedGame } from "../store/slices/gameRankSlice";
 import supabase from "../supabase/supabaseClient";
-import Pagination from "./../components/Pagination";
 
-const GameRankFetchData = ({ searchQuery }) => {
-  const [games, setGames] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
+const GameRankFetchData = ({ gameSortBy }) => {
+  const dispatch = useDispatch();
+  const { games, loading, selectedGame } = useSelector((state) => state.gameRank);
   const itemsPerPage = 4;
 
   useEffect(() => {
     const fetchData = async () => {
       const { data, error } = await supabase
-        .from("Test_best100game")
+        .from("GreatestGamesTop50")
         .select("*")
         .order("created_at", { ascending: true });
       if (error) {
         console.error("Error fetching data: ", error);
       } else {
-        setGames(data);
+        dispatch(setGames(data));
+        dispatch(setLoading(false));
       }
-      setLoading(false);
     };
 
     fetchData();
-  }, []);
+  }, [dispatch]);
 
-  const filteredGames = useFind(games, searchQuery);
-  const totalPages = Math.ceil(filteredGames.length / itemsPerPage);
+  const filteredGames = useDataFilterByQuery(games, gameSortBy);
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
+  // usePagination 훅 사용
+  const { totalPages, currentItems, currentPage, handlePageChange } = usePagination(
+    filteredGames,
+    1, // 초기 페이지
+    itemsPerPage,
+  );
+
+  const openGameInfoModal = (game) => {
+    dispatch(setSelectedGame(game));
   };
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredGames.slice(indexOfFirstItem, indexOfLastItem);
+  const closeGameInfoModal = () => {
+    dispatch(setSelectedGame(null));
+  };
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  const showRank = searchQuery === "";
+  const showRank = gameSortBy === "";
 
   return (
     <StContainer>
       <StFetchGameList>
         {currentItems.length > 0 ? (
           currentItems.map((game, index) => (
-            <StGameCard key={game.id}>
-              {showRank && <Rank>{indexOfFirstItem + index + 1}</Rank>}
+            <StGameCard key={game.id} onClick={() => openGameInfoModal(game)}>
+              {showRank && <Rank>{(currentPage - 1) * itemsPerPage + index + 1}</Rank>}
               {game.image_url && <img src={game.image_url} alt={game.title} />}
               <h2>{game.title}</h2>
             </StGameCard>
           ))
         ) : (
-          <div>No games found</div>
+          <div>no data</div>
         )}
       </StFetchGameList>
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+      {selectedGame && <GameInfoModal onClose={closeGameInfoModal} data={selectedGame} />}
     </StContainer>
   );
 };
@@ -80,16 +90,17 @@ const StFetchGameList = styled.div`
 `;
 
 const StGameCard = styled.div`
-  background-color: #2a2829;
+  background-color: var(--color-black-50);
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px var(--color-black-70);
   width: calc(25% - 20px);
   box-sizing: border-box;
   text-align: left;
   position: relative; /* 랭킹 번호 위치를 위한 상대적 위치 설정 */
   text-overflow: ellipsis;
   white-space: nowrap;
+  cursor: pointer; /* 마우스를 올렸을 때 포인터 모양으로 변경 */
 
   img {
     width: 100%;
@@ -103,8 +114,8 @@ const StGameCard = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    color: #ffffff;
-    font-size: 20px;
+    color: var(--white);
+    font-size: 2rem;
     margin-top: 12px;
     font-weight: bold;
   }
@@ -116,7 +127,7 @@ const StGameCard = styled.div`
     -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
     white-space: normal;
-    color: #ffffff;
+    color: var(--white);
   }
 `;
 
@@ -124,9 +135,9 @@ const Rank = styled.div`
   position: absolute;
   top: 5px;
   left: 3px;
-  font-size: 30px;
-  color: #ffffff;
-  text-shadow: 0px 0px 20px #000000;
+  font-size: 3rem;
+  color: var(--white);
+  text-shadow: 0px 0px 20px var(--color-black-60);
   font-weight: bold;
   letter-spacing: -1.2px;
 `;
