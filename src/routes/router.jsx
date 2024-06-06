@@ -5,6 +5,7 @@ import HomePage from "../pages/HomePage/HomePage";
 import FeedPage from "../pages/FeedPage/FeedPage";
 import AddPreview from "../pages/NewPost/AddPreview";
 import NewPost from "../pages/NewPost/NewPost";
+import MyPage from "../pages/MyPage/MyPage";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "/feed", // FeedPage 경로 추가
         element: <FeedPage />,
+      },
+      {
+        path: "/mypage/:id",
+        element: <MyPage />,
       },
     ],
   },
