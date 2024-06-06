@@ -1,13 +1,22 @@
-import { useRef } from "react";
+import DOMPurify from "dompurify";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import useFetchPosts from "../../hooks/db/useFetchPosts";
 
 const USER_ID = "b7597b6f-8cb9-4965-a8eb-4d2fb416f3c5";
-const POST_ID = 9;
+const POST_ID = 23;
 
 const DetailPage = () => {
   const { posts, loading } = useFetchPosts(USER_ID, POST_ID);
+  const [sanitizedHTML, setSanitizedHTML] = useState("");
+  console.log(posts);
   const commentInputRef = useRef();
+
+  useEffect(() => {
+    if (posts?.contents) {
+      setSanitizedHTML(DOMPurify.sanitize(posts?.contents, { ALLOWED_ATTR: ["style", "class"] }));
+    }
+  }, [posts]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,7 +34,8 @@ const DetailPage = () => {
           </div>
           <FollowButton>팔로우</FollowButton>
         </Subtitle>
-        <Content dangerouslySetInnerHTML={{ __html: posts?.contents }} />
+
+        {typeof window !== "undefined" && <Content dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />}
 
         <UserInfoContainer>
           <div>{posts.nickname}</div>
@@ -111,6 +121,19 @@ const Content = styled.div`
   font-size: 1.8rem;
   line-height: 1.5;
   text-align: left;
+
+  strong {
+    font-weight: bold;
+  }
+  .ql-size-small {
+    font-size: 0.75rem;
+  }
+  .ql-size-large {
+    font-size: 1.5rem;
+  }
+  .ql-size-huge {
+    font-size: 2.5rem;
+  }
 `;
 
 const UserInfoContainer = styled.div`
@@ -119,10 +142,11 @@ const UserInfoContainer = styled.div`
   align-items: center;
   width: 100%;
   height: 120px;
-  margin: 20px 0;
+  margin: 40px 0;
+  border-bottom: 1px solid var(--color-black-20);
 
   div {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: 600;
   }
 `;
@@ -165,7 +189,7 @@ const ButtonWrapper = styled.div`
     padding: 0 2rem;
     border: none;
     border-radius: 0.4rem;
-    background-color: var(--color-red-20);
+    background-color: var(--secondary-color);
     font-weight: 600;
     cursor: pointer;
 
