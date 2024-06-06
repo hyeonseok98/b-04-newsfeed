@@ -11,6 +11,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const isModalOpen = useSelector((state) => state.auth.isModalOpen);
   const { isLoggedin } = useAuthState();
+
   return (
     <StHeader>
       {!isLoggedin && <button onClick={() => dispatch(openModal())}>Login</button>}
