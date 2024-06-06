@@ -1,26 +1,20 @@
 import DOMPurify from "dompurify";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import useFetchPosts from "../../hooks/db/useFetchPosts";
 import Comments from "./Comments/Comments";
 
-const USER_ID = "b7597b6f-8cb9-4965-a8eb-4d2fb416f3c5";
-const POST_ID = 23;
-
 const DetailPage = () => {
-  const { posts, loading } = useFetchPosts(USER_ID, POST_ID);
+  const { id: POST_ID } = useParams();
+  const { posts, loading } = useFetchPosts(POST_ID);
   const [sanitizedHTML, setSanitizedHTML] = useState("");
-  // const commentInputRef = useRef();
 
   useEffect(() => {
     if (posts?.contents) {
       setSanitizedHTML(DOMPurify.sanitize(posts?.contents, { ALLOWED_ATTR: ["style", "class"] }));
     }
   }, [posts]);
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  // };
 
   if (loading) return <div>Loading...</div>;
 
