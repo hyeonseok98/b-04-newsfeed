@@ -1,11 +1,9 @@
 import { useState } from "react";
-
 import GameRankFetchData from "../../api/GameRankFetchData";
 import GenreDropdown from "../../components/GenreDropdown";
 import SearchTopContainer from "../../components/SearchTopContainer";
-
 import FakeArticle from "../../api/FakeArticle";
-import { StCommunity, StHeader, StMain, StMoveTop, StNews } from "./HomePageStyle";
+import { StCommunity, StHeader, StMain, StMoveTop, StNews, StFeedButton } from "./HomePageStyle";
 
 const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -52,6 +50,7 @@ const HomePage = () => {
         <div className="search-MiddleContainer">
           <button>최신 글</button>
           <button>인기 글</button>
+          <StFeedButton to="/feed">내 피드</StFeedButton>
         </div>
         <FakeArticle searchQuery={searchQuery} />
       </StCommunity>
