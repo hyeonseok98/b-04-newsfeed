@@ -1,63 +1,84 @@
-// import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import supabase from "../../supabase/supabaseClient";
 
-// const Follow = ({ userId, targetUserId }) => {
-//   const [isFollowing, setIsFollowing] = useState(false);
+const Follow = ({ userId, targetUserId }) => {
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-//   useEffect(() => {
-//     checkFollowStatus();
-//   }, [userId, targetUserId]); // userId와 targetUserId가 변경될 때마다 팔로우 상태를 확인합니다.
+  useEffect(() => {
+    if (userId) {
+      checkFollowStatus();
+    } else {
+      setIsLoading(false);
+    }
+  }, [userId]);
 
-//   const checkFollowStatus = async () => {
-//     const { data, error } = await supabase
-//       .from("follows")
-//       .select("*")
-//       .eq("follower_id", userId)
-//       .eq("following_id", targetUserId); // 필드 이름 유지
+  const checkFollowStatus = async () => {
+    try {
+      const { data, error } = await supabase.from("User").select("follow").eq("id", userId).single();
 
-//     if (error) {
-//       console.error("Error fetching follow status:", error);
-//     } else {
-//       setIsFollowing(data.length > 0);
-//     }
-//   };
+      if (error) {
+        throw error;
+      }
 
-//   const handleFollow = async () => {
-//     if (isFollowing) {
-//       // 언팔로우 로직
-//       const { error } = await supabase
-//         .from("follows")
-//         .delete()
-//         .eq("follower_id", userId)
-//         .eq("following_id", targetUserId); // 필드 이름 유지
+      const { follow } = data;
+      setIsFollowing(follow && follow.includes(targetUserId));
+      setIsLoading(false);
+    } catch (error) {
+      setError(error.message);
+      setIsLoading(false);
+    }
+  };
 
-//       if (error) {
-//         console.error("Error unfollowing:", error);
-//       } else {
-//         setIsFollowing(false);
-//       }
-//     } else {
-//       // 팔로우 로직
-//       const { data, error } = await supabase
-//         .from("follows")
-//         .insert([{ follower_id: userId, following_id: targetUserId }]); // 필드 이름 유지
+  const handleFollow = async () => {
+    try {
+      const { data, error } = await supabase.from("User").select("follow").eq("id", userId).single();
 
-//       if (error) {
-//         console.error("Error following:", error);
-//         console.error("Supabase insert error data:", data); // 추가된 로그
-//       } else {
-//         console.log("Follow success:", data); // 추가된 로그
-//         setIsFollowing(true);
-//       }
-//     }
-//   };
+      if (error) {
+        throw error;
+      }
 
-//   return (
-//     <div>
-//       <button onClick={handleFollow}>{isFollowing ? "Unfollow" : "Follow"}</button>
-//     </div>
-//   );
-// };
+      let updatedFollow = data.follow ? [...data.follow] : [];
 
-// export default Follow;
+      if (isFollowing) {
+        // 언팔로우 로직
+        const index = updatedFollow.findIndex((userId) => userId === targetUserId);
+        if (index !== -1) {
+          updatedFollow.splice(index, 1);
+        }
+      } else {
+        // 팔로우 로직
+        if (!updatedFollow.includes(targetUserId)) {
+          updatedFollow = [targetUserId]; // 배열을 덮어쓰기
+        }
+      }
 
-// 콘솔이 더러워져서 잠시 주석 했습니다
+      const { error: updateError } = await supabase.from("User").update({ follow: updatedFollow }).eq("id", userId);
+
+      if (updateError) {
+        throw updateError;
+      }
+
+      setIsFollowing((prevIsFollowing) => !prevIsFollowing); // 팔로우 상태를 업데이트 이후의 상태로 변경
+    } catch (error) {
+      console.error("Error updating follow status:", error.message);
+    }
+  };
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      <button onClick={handleFollow}>{isFollowing ? "Unfollow" : "Follow"}</button>
+    </div>
+  );
+};
+
+export default Follow;
