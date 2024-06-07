@@ -50,11 +50,11 @@ export const StForm = styled.form`
 export const CloseBtn = styled.button`
   color: var(--white);
   position: absolute;
-  right: 3rem;
-  top: 3rem;
+  right: 2.8rem;
+  top: 2.6rem;
   border: none;
   background-color: transparent;
-  font-size: 22px;
+  font-size: 32px;
   &:hover {
     cursor: pointer;
     filter: brightness(0.8);

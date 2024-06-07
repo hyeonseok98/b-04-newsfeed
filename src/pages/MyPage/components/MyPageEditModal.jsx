@@ -59,7 +59,7 @@ const MyPageModal = ({ setIsEditModalOpen, nicknames, loginUserId }) => {
   return (
     <Modal>
       <p>프로필 수정</p>
-      <CloseBtn onClick={() => setIsEditModalOpen(false)}>X</CloseBtn>
+      <CloseBtn onClick={() => setIsEditModalOpen(false)}>&times;</CloseBtn>
       <StForm onSubmit={handleEditUserProfile}>
         <div>
           <input type="text" defaultValue={loginUserInfo.nickname} name="nickname" placeholder="닉네임" />

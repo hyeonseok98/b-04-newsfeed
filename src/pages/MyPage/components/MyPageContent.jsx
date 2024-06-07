@@ -1,3 +1,4 @@
+import supabase from "../../../supabase/supabaseClient";
 import { useSelector } from "react-redux";
 import {
   BtnWrapper,
@@ -10,9 +11,26 @@ import {
   UserInfoSection,
 } from "./MyPageContentStyle";
 
-const MyPageContent = ({ setIsEditModalOpen }) => {
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+const MyPageContent = ({ setIsEditModalOpen, loginUserId }) => {
+  const navigate = useNavigate();
   const loginUserInfo = useSelector((state) => state.loginUser.loginUserInfo);
   const loginUserPosts = useSelector((state) => state.loginUser.loginUserPosts);
+  const [usedPostId, setUsedPostId] = useState([]);
+
+  useEffect(() => {
+    const fetchCommentCount = async () => {
+      const { data, error } = await supabase.from("comment").select("*");
+      if (error) {
+        console.log(error);
+      } else {
+        setUsedPostId(data.map((e) => e.post_id));
+      }
+    };
+    fetchCommentCount();
+  }, []);
 
   const handleDeletUser = () => {
     const deletUser = async () => {
@@ -28,6 +46,16 @@ const MyPageContent = ({ setIsEditModalOpen }) => {
       localStorage.clear();
       navigate("/");
     }
+  };
+
+  const commentCount = (id) => {
+    let count = 0;
+    for (let check of usedPostId) {
+      if (id === check) {
+        count++;
+      }
+    }
+    return count;
   };
 
   return (
@@ -49,7 +77,8 @@ const MyPageContent = ({ setIsEditModalOpen }) => {
             <StLi
               key={post.id}
               onClick={() => {
-                navigate("/"); 
+                navigate(`/detail/${post.id}`);
+
               }}
             >
               <LiContentWrapper>
@@ -59,7 +88,8 @@ const MyPageContent = ({ setIsEditModalOpen }) => {
                 </div>
                 <div className="date">
                   <p>{post.created_at.slice(0, 10)}</p>
-                  <p>댓글 n 개</p>
+                  <p>댓글 {commentCount(post.id)}개</p>
+
                 </div>
               </LiContentWrapper>
             </StLi>

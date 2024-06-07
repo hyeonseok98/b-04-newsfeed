@@ -9,7 +9,7 @@ import MyPageModal from "./components/MyPageEditModal";
 import useAuthState from "../../hooks/useAuthState";
 
 const MyPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
   const navigate = useNavigate();
   const [loginUserId, setLoginUserId] = useState("");
   const [nicknames, setNicknames] = useState([]);
@@ -27,6 +27,7 @@ const MyPage = () => {
     if (!isLoggedin) {
       goBackLogin();
     }
+
     setLoginUserId(user.id);
     if (loginUserId) {
       const fetchLoginUserData = async () => {

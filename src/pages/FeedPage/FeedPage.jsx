@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import Follow from "../../components/Follow/Follow";
-import { StContainer, StFeedList, StFeedContent, StFeedTop, StImageWrapper } from "./FeedPageStyle";
+import { StContainer, StFeedContent, StFeedTop, StImageWrapper } from "./FeedPageStyle";
 
 const FeedPage = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -22,23 +21,12 @@ const FeedPage = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const userIdString = localStorage.getItem("user");
-  const userIdJSON = JSON.parse(userIdString);
-  const userId = userIdJSON ? [userIdJSON.id] : null;
-
-  const targetUserId = "4b94a233-a41b-4023-a765-8fe506dc74aa"; // 예시용 타겟 유저 ID
-
   return (
     <StContainer>
       <StImageWrapper>
         <img src={imageUrls[currentImageIndex]} alt={`Image ${currentImageIndex + 1}`} />
       </StImageWrapper>
-      <StFeedList>
-        <div>최신글</div>
-        <div>찜한글</div>
-      </StFeedList>
 
-      {userId && <Follow userId={userId} targetUserId={targetUserId} />}
       <StFeedContent>{/* 내용 */}</StFeedContent>
 
       <StFeedTop onClick={handleScrollToTop}>

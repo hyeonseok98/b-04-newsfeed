@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import supabase from "../../supabase/supabaseClient";
+import styled from "styled-components";
 
 const Follow = ({ userId, targetUserId }) => {
   const [isFollowing, setIsFollowing] = useState(false);
@@ -74,11 +75,20 @@ const Follow = ({ userId, targetUserId }) => {
     return <div>Loading...</div>;
   }
 
-  return (
-    <div>
-      <button onClick={handleFollow}>{isFollowing ? "Unfollow" : "Follow"}</button>
-    </div>
-  );
+  return <StyledButton onClick={handleFollow}>{isFollowing ? "언팔로우" : "팔로우"}</StyledButton>;
 };
 
 export default Follow;
+
+const StyledButton = styled.button`
+  width: 96px;
+  height: 32px;
+  padding: 1px 6px;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--color-red-30);
+  border: 1px solid var(--color-red-20);
+  border-radius: 1.6rem;
+  background-color: var(--white);
+  cursor: pointer;
+`;
