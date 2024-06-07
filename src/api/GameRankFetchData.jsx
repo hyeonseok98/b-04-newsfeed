@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-
-import usePagination from "../hooks/usePagination"; // 커스텀 훅 추가
+import usePagination from "../hooks/usePagination";
 import GameInfoModal from "../pages/HomePage/GameInfoModal";
 import Pagination from "../pages/HomePage/Pagination";
 import { setGames, setLoading, setSelectedGame } from "../store/slices/gameRankSlice";
@@ -33,7 +32,6 @@ const GameRankFetchData = ({ gameSortBy }) => {
 
   const filteredGames = filterDataByQuery(games, gameSortBy);
 
-  // usePagination 훅 사용
   const { totalPages, currentItems, currentPage, handlePageChange } = usePagination(
     filteredGames,
     1, // 초기 페이지
@@ -98,10 +96,10 @@ const StGameCard = styled.div`
   width: calc(25% - 20px);
   box-sizing: border-box;
   text-align: left;
-  position: relative; /* 랭킹 번호 위치를 위한 상대적 위치 설정 */
+  position: relative;
   text-overflow: ellipsis;
   white-space: nowrap;
-  cursor: pointer; /* 마우스를 올렸을 때 포인터 모양으로 변경 */
+  cursor: pointer;
 
   img {
     width: 100%;

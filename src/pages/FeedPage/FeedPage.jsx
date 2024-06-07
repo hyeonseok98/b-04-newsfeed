@@ -1,17 +1,15 @@
-import { useState, useEffect } from "react";
-import { StContainer, StFeedContent, StFeedTop, StImageWrapper } from "./FeedPageStyle";
+import { useEffect, useState } from "react";
+import styled from "styled-components";
 
 const FeedPage = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // 이미지 URL 배열
   const imageUrls = ["https://ifh.cc/g/WYf4A4.jpg", "https://ifh.cc/g/bRD8Hs.png", "https://ifh.cc/g/xFm0Hy.png"];
 
-  // 이미지 변경 효과 설정
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imageUrls.length);
-    }, 10000); // 10초마다 이미지 전환
+    }, 5000);
 
     // 컴포넌트가 unmount 될 때 clearInterval 호출하여 interval 제거
     return () => clearInterval(intervalId);
@@ -37,3 +35,52 @@ const FeedPage = () => {
 };
 
 export default FeedPage;
+
+const StContainer = styled.div`
+  width: 1320px;
+  margin: 0 auto;
+`;
+
+const StImageWrapper = styled.div`
+  img {
+    width: 100%;
+    height: 300px;
+  }
+`;
+
+const StFeedContent = styled.div`
+  width: 1320px;
+  height: 1500px;
+  background-color: gray;
+  margin: 40px auto 0;
+`;
+
+const StFeedTop = styled.div`
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  background-color: #f56263;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #d94a53;
+  }
+
+  button {
+    border: none;
+    background: none;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+  }
+`;

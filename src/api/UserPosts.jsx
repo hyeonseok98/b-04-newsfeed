@@ -125,7 +125,7 @@ const StCard = styled.div`
     white-space: normal;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 5;
+    -webkit-line-clamp: 6;
   }
 
   h4 {

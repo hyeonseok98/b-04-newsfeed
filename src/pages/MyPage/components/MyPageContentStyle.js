@@ -9,6 +9,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 export const UserInfoSection = styled.section`
   width: 920px;
   background-color: var(--color-black-50);
@@ -23,6 +24,7 @@ export const UserInfoSection = styled.section`
 
 export const BtnWrapper = styled.div`
   display: flex;
+
   button {
     display: flex;
     align-items: end;
@@ -30,6 +32,7 @@ export const BtnWrapper = styled.div`
     border: none;
     color: var(--color-black-30);
     font-size: 1.2rem;
+
     &:hover {
       cursor: pointer;
     }
@@ -39,11 +42,13 @@ export const StDiv = styled.div`
   width: 75%;
   display: flex;
   flex-direction: column;
+
   h3 {
     font-size: 3.2rem;
     font-weight: bold;
     margin-bottom: 2rem;
   }
+
   p {
     color: var(--white);
     font-size: 1.6rem;
@@ -83,6 +88,7 @@ export const StLi = styled.li`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
   &:hover {
     cursor: pointer;
     scale: 1.02;
@@ -92,7 +98,9 @@ export const StLi = styled.li`
 export const LiContentWrapper = styled.div`
   h4 {
     font-weight: 600;
+    line-height: 1.5;
   }
+
   p {
     font-size: 1.8rem;
     line-height: 2.4rem;
@@ -105,11 +113,13 @@ export const LiContentWrapper = styled.div`
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
   }
+
   div.date {
     display: flex;
     width: 20rem;
     margin-left: auto;
   }
+
   p {
     font-size: 1.6rem;
   }

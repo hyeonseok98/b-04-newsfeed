@@ -61,7 +61,6 @@ const useAuthState = () => {
         setIsLoggedin(true);
         localStorage.setItem("isLoggedin", "true");
         localStorage.setItem("user", JSON.stringify(session.user));
-        // await getSessionAndHandleUser();   이 줄의 코드는 지워질 코드이지만 확인할게 있어 남겨두었습니다. 확인 후 삭제하겠습니다
       } else {
         localStorage.removeItem("isLoggedin");
         localStorage.removeItem("user");

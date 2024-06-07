@@ -17,12 +17,10 @@ const HomePage = () => {
       dispatch(setGameSortBy(genre));
     }
   };
-  // 스크롤을 최상단으로 이동하는 함수
+
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-
-  // 최신 글 버튼 클릭 핸들러
 
   const handleSortByLatest = () => {
     dispatch(setSortBy("latest"));
@@ -90,7 +88,6 @@ const StCommunity = styled.div`
 
 const StSearchMiddleContainer = styled.div`
   position: relative;
-
   left: 0px;
   right: 20px;
   display: flex;

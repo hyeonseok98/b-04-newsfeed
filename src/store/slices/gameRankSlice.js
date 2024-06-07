@@ -16,7 +16,7 @@ const gameRankSlice = createSlice({
       state.loading = action.payload;
     },
     setCurrentPage(state, action) {
-      state.currentPage = action.payload; // 페이지 네이션이랑 겹치는거 같아서 빼버리면 모달이 안먹히는 참사가 나타나서 냅두는중.. //
+      state.currentPage = action.payload;
     },
     setSelectedGame(state, action) {
       state.selectedGame = action.payload;
