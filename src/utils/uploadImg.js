@@ -1,6 +1,6 @@
 import supabase from "../supabase/supabaseClient";
 
-const uploadImg = async (imgFile, userId, postId = null, imgStorage) => {
+const uploadImg = async (imgFile, userId, imgStorage, postId = null) => {
   const timestamp = new Date().getTime();
   const encodedFileName = encodeURIComponent(`${timestamp}-${imgFile.name}`);
   const filePath = postId ? `${userId}/${postId}/${encodedFileName}` : `${userId}/${encodedFileName}`;

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import ReactQuill from "react-quill";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import uploadImg from "../../utils/uploadImg";
@@ -21,11 +22,11 @@ const FORMATS = [
   "image",
 ];
 
-const USER_ID = "b7597b6f-8cb9-4965-a8eb-4d2fb416f3c5";
-
 function NewPost() {
   const navigate = useNavigate();
+  const user = useSelector((state) => state.auth.user);
 
+  const USER_ID = user.id;
   const quillRef = useRef(null);
   const titleRef = useRef(null);
 
