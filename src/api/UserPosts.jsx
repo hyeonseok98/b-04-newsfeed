@@ -97,7 +97,6 @@ const StCard = styled.div`
     border-radius: 8px;
     aspect-ratio: 2 / 1.5;
     object-fit: fill;
-    padding: 5px;
     margin: 10px 0;
     background-color: var(--white);
   }
@@ -117,14 +116,15 @@ const StCard = styled.div`
   }
 
   h3 {
-    font-size: 1.6rem;
-    color: var(--white);
+    height: 150px;
     padding: 10px 0;
     margin-left: 5px;
+    font-size: 1.6rem;
+    line-height: 1.66;
+    color: var(--white);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: normal;
-    height: 150px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 5;
