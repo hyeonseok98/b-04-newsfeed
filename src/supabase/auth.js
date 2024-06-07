@@ -14,7 +14,7 @@ export const signUp = async (email, password, nickname) => {
     },
   });
   if (error) {
-    alert("회원가입 에러", error.message);
+    console.error(error.message);
     return;
   }
   const userId = user?.id;
@@ -43,7 +43,7 @@ export const signInWithEmail = async (email, password) => {
   const { error: userError } = await supabase.from("User").select("id").eq("email", email).single();
   if (userError) {
     console.log("사용자 조회 에러", userError.message);
-    alert("회원가입이 필요합니다.");
+
     return { user: null, error: userError };
   }
 
