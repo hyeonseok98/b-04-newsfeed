@@ -48,7 +48,6 @@ const EmailAuth = ({ isLoginPage }) => {
         <span>{errorMessage.email}</span>
       </div>
       <div>
-        {" "}
         <input
           placeholder="비밀번호를 입력해주세요"
           name="password"
