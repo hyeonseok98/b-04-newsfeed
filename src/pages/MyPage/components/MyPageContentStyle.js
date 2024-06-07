@@ -1,11 +1,16 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 920px;
+  width: 1320px;
   padding: 30px;
   margin: 8rem auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 export const UserInfoSection = styled.section`
+  width: 920px;
   background-color: var(--color-black-50);
   color: var(--secondary-color);
   border: 1px solid var(--black);
@@ -49,34 +54,35 @@ export const StDiv = styled.div`
 
 export const Line = styled.div`
   height: 1px;
-  width: 100%;
+  width: 80%;
   background-color: var(--black);
   margin-top: 4rem;
-  margin-bottom: 6rem;
+  margin-bottom: 2rem;
 `;
 
 export const PostsSection = styled.ul`
-  font-size: 2rem;
-  margin-top: 6rem;
+  margin-top: 2rem;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 2rem;
+  width: 70%;
 `;
 
 export const StLi = styled.li`
   background-color: var(--color-black-20);
+  padding: 2rem 2.8rem;
+  border-radius: 16px;
+  box-shadow: 0.6px 1px 2px 1px var(--color-black-30);
+  width: 340px;
+  height: 600px;
   color: var(--black);
-  width: 80%;
   height: 10rem;
   overflow: hidden;
-  // border: 1px solid var(--black);
-  border-radius: 16px;
   margin: 1.2rem;
-  padding: 2rem 2.8rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0.6px 1px 2px 1px var(--color-black-30);
   &:hover {
     cursor: pointer;
     scale: 1.02;
