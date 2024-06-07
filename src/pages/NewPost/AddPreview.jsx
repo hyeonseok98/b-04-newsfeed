@@ -13,7 +13,7 @@ function AddPreview() {
   const { createPost } = usePosts();
   const user = useSelector((state) => state.auth.user);
   const USER_ID = user.id;
-  const NICK_NAME = user.user_metadata.displayName;
+  const NICK_NAME = user.nickname;
 
   const title = sessionStorage.getItem("title");
   const contents = sessionStorage.getItem("contents");

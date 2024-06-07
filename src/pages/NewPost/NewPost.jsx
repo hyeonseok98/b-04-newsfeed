@@ -55,14 +55,12 @@ function NewPost() {
 
     input.onchange = async () => {
       const file = input.files[0];
-      const imageUrl = await uploadImg(file, USER_ID, null, "images");
+      const imageUrl = await uploadImg(file, USER_ID, "images");
 
       if (!imageUrl) {
         console.error("Error uploading image");
         return;
       }
-
-      const publicUrl = imageUrl.data.publicUrl;
 
       const quillEditor = quillRef.current.getEditor();
       let range = quillEditor.getSelection();
@@ -74,7 +72,7 @@ function NewPost() {
         };
       }
 
-      quillEditor.insertEmbed(range.index, "image", publicUrl);
+      quillEditor.insertEmbed(range.index, "image", imageUrl);
       quillEditor.setSelection(range.index + 1, 0); // 커서를 이미지 다음으로 이동
     };
   };

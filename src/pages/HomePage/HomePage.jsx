@@ -1,10 +1,10 @@
-import GameRankFetchData from "../../api/GameRankFetchData";
-import GenreDropdown from "./GenreDropdown";
-import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import GameRankFetchData from "../../api/GameRankFetchData";
 import UserPosts from "../../api/UserPosts";
 import { setGameSortBy, setSortBy } from "../../store/slices/searchQuerySlice";
-import { Link } from "react-router-dom";
+import GenreDropdown from "./GenreDropdown";
 
 const HomePage = () => {
   const dispatch = useDispatch();
