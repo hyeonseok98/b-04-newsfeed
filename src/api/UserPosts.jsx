@@ -100,12 +100,26 @@ const StCard = styled.div`
   }
 
   h2,
-  h4,
-  h3 {
+  h4 {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     color: var(--white);
     padding: 10px;
+  }
+
+  h3 {
+    color: var(--white);
+    padding: 10px;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    white-space: normal;
+    /* 핫픽스 추가 */
+    height: 150px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
   }
 `;
