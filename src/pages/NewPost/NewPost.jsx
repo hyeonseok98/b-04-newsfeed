@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import ReactQuill from "react-quill";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import uploadImg from "../../utils/uploadImg";
@@ -21,11 +22,11 @@ const FORMATS = [
   "image",
 ];
 
-const USER_ID = "b7597b6f-8cb9-4965-a8eb-4d2fb416f3c5";
-
 function NewPost() {
   const navigate = useNavigate();
+  const user = useSelector((state) => state.auth.user);
 
+  const USER_ID = user.id;
   const quillRef = useRef(null);
   const titleRef = useRef(null);
 
@@ -54,14 +55,12 @@ function NewPost() {
 
     input.onchange = async () => {
       const file = input.files[0];
-      const imageUrl = await uploadImg(file, USER_ID, null, "images");
+      const imageUrl = await uploadImg(file, USER_ID, "images");
 
       if (!imageUrl) {
         console.error("Error uploading image");
         return;
       }
-
-      const publicUrl = imageUrl.data.publicUrl;
 
       const quillEditor = quillRef.current.getEditor();
       let range = quillEditor.getSelection();
@@ -73,7 +72,7 @@ function NewPost() {
         };
       }
 
-      quillEditor.insertEmbed(range.index, "image", publicUrl);
+      quillEditor.insertEmbed(range.index, "image", imageUrl);
       quillEditor.setSelection(range.index + 1, 0); // 커서를 이미지 다음으로 이동
     };
   };

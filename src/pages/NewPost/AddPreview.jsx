@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import dropbox from "../../assets/images/dropbox.png";
@@ -6,17 +7,16 @@ import usePosts from "../../hooks/db/usePosts";
 import uploadImg from "../../utils/uploadImg";
 
 const TEXT_LENGTH = 150;
-const USER_ID = "b7597b6f-8cb9-4965-a8eb-4d2fb416f3c5";
-const NICK_NAME = "i'am tester";
-const POST_ID = 16;
 
 function AddPreview() {
   const navigate = useNavigate();
   const { createPost } = usePosts();
+  const user = useSelector((state) => state.auth.user);
+  const USER_ID = user.id;
+  const NICK_NAME = user.nickname;
 
   const title = sessionStorage.getItem("title");
   const contents = sessionStorage.getItem("contents");
-
   const [isActive, setActive] = useState(false);
   const [previewImg, setPreviewImg] = useState(null);
   const [previewImgData, setPreviewImgData] = useState("");
@@ -68,7 +68,7 @@ function AddPreview() {
   const handlePublish = async () => {
     let imgUrl = null;
     if (previewImgData) {
-      imgUrl = await uploadImg(previewImgData, USER_ID, POST_ID, "thumbnail");
+      imgUrl = await uploadImg(previewImgData, USER_ID, "thumbnail");
     }
 
     await createPost({

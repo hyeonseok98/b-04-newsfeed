@@ -8,12 +8,13 @@ import timeFormatter from "../../../utils/timeFormatter";
 
 const Comments = ({ postId }) => {
   const { createComment, updateComment, deleteComment } = useComments();
+  const user = useSelector((state) => state.auth.user);
+
+  const commentRef = useRef();
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editingContent, setEditingContent] = useState("");
-  const commentRef = useRef();
-  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     fetchComments();

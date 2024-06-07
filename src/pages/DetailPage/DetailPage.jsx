@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import defaultProfile from "../../assets/images/default-profile.jpg";
+import Follow from "../../components/Follow/Follow";
 import useFetchPosts from "../../hooks/db/useFetchPosts";
 import timeFormatter from "../../utils/timeFormatter";
 import Comments from "./Comments/Comments";
-import Follow from "../../components/Follow/Follow";
 
 const DetailPage = () => {
   const { id: POST_ID } = useParams();
@@ -15,7 +15,12 @@ const DetailPage = () => {
 
   useEffect(() => {
     if (posts?.contents) {
-      setSanitizedHTML(DOMPurify.sanitize(posts?.contents, { ALLOWED_ATTR: ["style", "class"] }));
+      setSanitizedHTML(
+        DOMPurify.sanitize(posts?.contents, {
+          ALLOWED_TAGS: ["img", "p", "strong", "em", "br"],
+          ALLOWED_ATTR: ["src", "alt", "style", "class"],
+        }),
+      );
     }
   }, [posts]);
 

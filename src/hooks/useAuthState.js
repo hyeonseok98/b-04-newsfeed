@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import supabase from "../supabase/supabaseClient";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { setUser } from "../store/slices/authSlice";
+import supabase from "../supabase/supabaseClient";
 
 const useAuthState = () => {
   const [isLoggedin, setIsLoggedin] = useState(() => localStorage.getItem("isLoggedin") === "true");

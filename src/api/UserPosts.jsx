@@ -71,19 +71,19 @@ const StFetchList = styled.div`
 `;
 
 const StCard = styled.div`
-  background-color: var(--color-black-50);
+  position: relative;
+  width: 300px;
+  height: 500px;
   padding: 20px;
   border-radius: 8px;
+  background-color: var(--color-black-50);
   box-shadow: 0 2px 4px var(--color-black-70);
-  width: 300px;
-  box-sizing: border-box;
-  text-align: left;
-  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  height: 500px;
-  position: relative;
   font-size: 2rem;
+  text-align: left;
+  box-sizing: border-box;
+  overflow: hidden;
   cursor: pointer;
 
   &:nth-child(odd) {
@@ -91,10 +91,17 @@ const StCard = styled.div`
   }
 
   img {
-    width: 100%;
+    width: calc(100% - 10px);
     border-radius: 8px;
     aspect-ratio: 2 / 1.5;
-    object-fit: cover;
+    object-fit: fill;
+    margin: 10px 0;
+    background-color: var(--white);
+  }
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 600;
   }
 
   h2,
@@ -107,17 +114,21 @@ const StCard = styled.div`
   }
 
   h3 {
+    height: 150px;
+    padding: 10px 0;
+    margin-left: 5px;
+    font-size: 1.6rem;
+    line-height: 1.66;
     color: var(--white);
-    padding: 10px;
-    margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;
-
     white-space: normal;
-    /* 핫픽스 추가 */
-    height: 150px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 5;
+  }
+
+  h4 {
+    font-size: 1.4rem;
   }
 `;
