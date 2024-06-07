@@ -1,10 +1,10 @@
-import GameRankFetchData from "../../api/GameRankFetchData";
-import GenreDropdown from "./GenreDropdown";
-import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import GameRankFetchData from "../../api/GameRankFetchData";
 import UserPosts from "../../api/UserPosts";
 import { setGameSortBy, setSortBy } from "../../store/slices/searchQuerySlice";
-import { Link } from "react-router-dom";
+import GenreDropdown from "./GenreDropdown";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -22,10 +22,7 @@ const HomePage = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // 인기 글 버튼 클릭 핸들러
-  const handleSortByViews = () => {
-    dispatch(setSortBy("likes"));
-  };
+  // 최신 글 버튼 클릭 핸들러
 
   const handleSortByLatest = () => {
     dispatch(setSortBy("latest"));
@@ -57,7 +54,7 @@ const HomePage = () => {
       <StCommunity>
         <StSearchMiddleContainer>
           <button onClick={handleSortByLatest}>최신 글</button>
-          <button onClick={handleSortByViews}>인기 글</button>
+
           <StFeedButton to="/feed">내 피드</StFeedButton>
         </StSearchMiddleContainer>
 
@@ -81,63 +78,6 @@ const StMain = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-const StHeader = styled.header`
-  position: sticky;
-  top: 0;
-  width: 100%;
-  height: 80px;
-  background-color: var(--color-black-90);
-  box-shadow: 0 2px 4px var(--color-black-70);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-  box-sizing: border-box;
-  gap: 16px;
-
-  .header-content {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .title {
-    color: var(--white);
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: left;
-    cursor: pointer;
-    flex: 1;
-
-    span {
-      font-weight: normal;
-    }
-  }
-`;
-
-const StLoginButtons = styled.div`
-  display: flex;
-  gap: 10px;
-
-  button {
-    padding: 10px 18px;
-    border: none;
-    border-radius: 25px;
-    background-color: var(--color-black-50);
-    color: var(--white);
-    cursor: pointer;
-    height: 48px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    transition: 0.4s;
-
-    &:hover {
-      background-color: var(--color-black-40);
-    }
-  }
 `;
 
 const StNews = styled.div`
