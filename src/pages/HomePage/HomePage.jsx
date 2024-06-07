@@ -33,21 +33,6 @@ const HomePage = () => {
 
   return (
     <StMain>
-      {/* <StHeader>
-        <h1 className="title" onClick={handleScrollToTop}>
-          Fak<span>er</span>
-        </h1>
-        
-        <StLoginButtons>
-          <button>로그인</button>
-          <button>가입</button>
-
-        </div>
-      </StHeader> */}
-
-      {/* </StLoginButtons>
-      </StHeader> */}
-
       <StNews>
         <GenreDropdown onGenreSelect={handleGenreSelect} />
 
@@ -83,63 +68,6 @@ const StMain = styled.div`
   align-items: center;
 `;
 
-const StHeader = styled.header`
-  position: sticky;
-  top: 0;
-  width: 100%;
-  height: 80px;
-  background-color: var(--color-black-90);
-  box-shadow: 0 2px 4px var(--color-black-70);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-  box-sizing: border-box;
-  gap: 16px;
-
-  .header-content {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .title {
-    color: var(--white);
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: left;
-    cursor: pointer;
-    flex: 1;
-
-    span {
-      font-weight: normal;
-    }
-  }
-`;
-
-const StLoginButtons = styled.div`
-  display: flex;
-  gap: 10px;
-
-  button {
-    padding: 10px 18px;
-    border: none;
-    border-radius: 25px;
-    background-color: var(--color-black-50);
-    color: var(--white);
-    cursor: pointer;
-    height: 48px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    transition: 0.4s;
-
-    &:hover {
-      background-color: var(--color-black-40);
-    }
-  }
-`;
-
 const StNews = styled.div`
   padding: 20px 20px 70px;
   background-color: var(--color-black-90);
@@ -155,7 +83,7 @@ const StCommunity = styled.div`
   width: 100%;
   max-width: 1320px;
   box-sizing: border-box;
-  height: 100%; /* 이전값 380px */
+  height: 100%;
   position: relative;
   display: flex;
   align-items: center;
@@ -212,8 +140,8 @@ const StMoveTop = styled.div`
     border: none;
     background: none;
     color: var(--white);
-    font-size: 1.5rem; /* 화살표 크기 확장 */
-    font-weight: bold; /* 화살표 두께 증가 */
+    font-size: 1.5rem;
+    font-weight: bold;
     cursor: pointer;
     outline: none;
   }
@@ -231,9 +159,9 @@ export const StFeedButton = styled(Link)`
   color: white;
   cursor: pointer;
   text-decoration: none;
-  display: flex; /* 컨테이너를 플렉스 컨테이너로 설정합니다. */
-  align-items: center; /* 수직 정렬을 설정합니다. */
-  justify-content: center; /* 수평 정렬을 설정합니다. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   &:hover {
     background-color: var(--secondary-color);
   }
