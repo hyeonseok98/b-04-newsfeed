@@ -6,6 +6,7 @@ import defaultProfile from "../../assets/images/default-profile.jpg";
 import useFetchPosts from "../../hooks/db/useFetchPosts";
 import timeFormatter from "../../utils/timeFormatter";
 import Comments from "./Comments/Comments";
+import Follow from "../../components/Follow/Follow";
 
 const DetailPage = () => {
   const { id: POST_ID } = useParams();
@@ -20,6 +21,12 @@ const DetailPage = () => {
 
   if (loading) return <div>Loading...</div>;
 
+  const userIdString = localStorage.getItem("user");
+  const userIdJSON = JSON.parse(userIdString);
+  const userId = userIdJSON ? [userIdJSON.id] : null;
+
+  const targetUserId = "4b94a233-a41b-4023-a765-8fe506dc74aa";
+
   return (
     <Container>
       <Article>
@@ -28,7 +35,8 @@ const DetailPage = () => {
           <div>
             <span>{posts.nickname} </span>· <span>{timeFormatter(posts.created_at)}</span>
           </div>
-          <FollowButton>팔로우</FollowButton>
+
+          {userId && <Follow userId={userId} targetUserId={targetUserId} />}
         </Subtitle>
 
         {typeof window !== "undefined" && <Content dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />}
@@ -38,7 +46,8 @@ const DetailPage = () => {
             <ProfileImage src={defaultProfile} alt="User profile" />
             <span>{posts.nickname}</span>
           </UserInfoWrapper>
-          <FollowButton>팔로우</FollowButton>
+
+          {userId && <Follow userId={userId} targetUserId={targetUserId} />}
         </UserInfoContainer>
         <Comments postId={POST_ID} />
       </Article>
@@ -95,19 +104,6 @@ const Subtitle = styled.div`
       font-size: 1.4rem;
     }
   }
-`;
-
-const FollowButton = styled.button`
-  width: 96px;
-  height: 32px;
-  padding: 1px 6px;
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: var(--color-red-30);
-  border: 1px solid var(--color-red-20);
-  border-radius: 1.6rem;
-  background-color: var(--white);
-  cursor: pointer;
 `;
 
 const Content = styled.div`
