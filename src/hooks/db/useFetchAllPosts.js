@@ -5,9 +5,6 @@ const useFetchAllPosts = (userId = null) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // useFetchAllPosts() => 모든 게시글을 가져옴
-  // useFetchAllPosts(userId) => userId에 맞는 게시글을 가져옴
-
   const fetchPosts = useCallback(async () => {
     setLoading(true);
     try {

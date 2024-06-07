@@ -1,5 +1,5 @@
-import supabase from "../../../supabase/supabaseClient";
 import { useSelector } from "react-redux";
+import supabase from "../../../supabase/supabaseClient";
 import {
   BtnWrapper,
   Container,
@@ -11,8 +11,8 @@ import {
   UserInfoSection,
 } from "./MyPageContentStyle";
 
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const MyPageContent = ({ setIsEditModalOpen, loginUserId }) => {
   const navigate = useNavigate();
@@ -78,7 +78,6 @@ const MyPageContent = ({ setIsEditModalOpen, loginUserId }) => {
               key={post.id}
               onClick={() => {
                 navigate(`/detail/${post.id}`);
-
               }}
             >
               <LiContentWrapper>
@@ -89,7 +88,6 @@ const MyPageContent = ({ setIsEditModalOpen, loginUserId }) => {
                 <div className="date">
                   <p>{post.created_at.slice(0, 10)}</p>
                   <p>댓글 {commentCount(post.id)}개</p>
-
                 </div>
               </LiContentWrapper>
             </StLi>

@@ -1,8 +1,8 @@
 import { useState } from "react";
+import { FaSearch } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { setSearchQuery } from "../store/slices/searchQuerySlice";
-import { FaSearch } from "react-icons/fa";
 
 const SearchForm = () => {
   const dispatch = useDispatch();
@@ -25,10 +25,6 @@ const SearchForm = () => {
   };
 
   return (
-    // <StSearchContainer>
-    //   <input type="text" />
-    //   <button onClick={handleSearch}>검색</button>
-    // </StSearchContainer>
     <StForm onSubmit={handleSearch}>
       <input type="text" placeholder="검색" value={query} onChange={handleInputChange} />
       <button>
@@ -66,7 +62,6 @@ const StForm = styled.form`
   @media (max-width: 700px) {
     & {
       width: 230px;
-      /* display: none; */
     }
     @media (max-width: 600px) {
       display: none;

@@ -19,6 +19,7 @@ export const Modal = styled.div`
   align-items: center;
   padding: 4.8rem;
   padding-top: 4rem;
+
   p {
     font-size: 2.4rem;
   }
@@ -30,6 +31,7 @@ export const StForm = styled.form`
     align-items: center;
     justify-content: flex-end;
     margin: 1rem;
+
     input {
       width: 240px;
       font-size: 1.4rem;
@@ -39,6 +41,7 @@ export const StForm = styled.form`
       background-color: transparent;
       padding: 0.6rem;
       border-radius: 4px;
+
       &:focus {
         outline: none;
         border-bottom: 1px solid var(--secondary-color);
@@ -55,6 +58,7 @@ export const CloseBtn = styled.button`
   border: none;
   background-color: transparent;
   font-size: 32px;
+
   &:hover {
     cursor: pointer;
     filter: brightness(0.8);
@@ -64,6 +68,7 @@ export const BtnWrapper = styled.div`
   position: absolute;
   bottom: 18px;
   left: 150px;
+
   button {
     background-color: var(--secondary-color);
     color: var(--white);
@@ -72,6 +77,7 @@ export const BtnWrapper = styled.div`
     border-radius: 8px;
     width: 80px;
     height: 40px;
+
     &:hover {
       cursor: pointer;
       filter: brightness(0.8);
