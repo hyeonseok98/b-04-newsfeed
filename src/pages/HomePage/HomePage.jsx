@@ -22,10 +22,7 @@ const HomePage = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // 인기 글 버튼 클릭 핸들러
-  const handleSortByViews = () => {
-    dispatch(setSortBy("likes"));
-  };
+  // 최신 글 버튼 클릭 핸들러
 
   const handleSortByLatest = () => {
     dispatch(setSortBy("latest"));
@@ -42,7 +39,7 @@ const HomePage = () => {
       <StCommunity>
         <StSearchMiddleContainer>
           <button onClick={handleSortByLatest}>최신 글</button>
-          <button onClick={handleSortByViews}>인기 글</button>
+
           <StFeedButton to="/feed">내 피드</StFeedButton>
         </StSearchMiddleContainer>
 

@@ -18,9 +18,7 @@ const UserPosts = ({ searchQuery, sortBy }) => {
   useEffect(() => {
     let sortedData = filteredData;
 
-    if (sortBy === "likes") {
-      sortedData = sortedData.sort((a, b) => b.likes - a.likes);
-    } else if (sortBy === "latest") {
+    if (sortBy === "latest") {
       sortedData = sortedData.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     }
 
