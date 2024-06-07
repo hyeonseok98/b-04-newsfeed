@@ -61,7 +61,6 @@ export const signInWithEmail = async (email, password) => {
     return { user: null, error: new Error("로그인 실패: 데이터를 받지 못했습니다.") };
   }
 
-  alert("로그인 성공");
   return { user: authData.user, error: null };
 };
 
@@ -78,7 +77,5 @@ export const signOut = async () => {
   if (error) {
     console.log(error);
     alert("로그아웃실패");
-  } else {
-    alert("로그아웃성공");
   }
 };

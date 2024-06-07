@@ -9,14 +9,14 @@ import MyPageModal from "./components/MyPageEditModal";
 import useAuthState from "../../hooks/useAuthState";
 
 const MyPage = () => {
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loginUserId, setLoginUserId] = useState("");
   const [nicknames, setNicknames] = useState([]);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const { isLoggedin } = useAuthState();
   const user = useSelector((state) => state.auth.user);
-  
+
   const goBackLogin = () => {
     alert("로그인이 필요한 기능입니다.");
     navigate("/");
@@ -24,6 +24,9 @@ const MyPage = () => {
   };
 
   useEffect(() => {
+    if (!isLoggedin) {
+      goBackLogin();
+    }
     setLoginUserId(user.id);
     if (loginUserId) {
       const fetchLoginUserData = async () => {
@@ -60,7 +63,7 @@ const MyPage = () => {
 
   return (
     <>
-      {isLoggedin ? <MyPageContent setIsEditModalOpen={setIsEditModalOpen} /> : goBackLogin()}
+      {isLoggedin && <MyPageContent setIsEditModalOpen={setIsEditModalOpen} />}
       {isEditModalOpen && (
         <MyPageModal setIsEditModalOpen={setIsEditModalOpen} nicknames={nicknames} loginUserId={loginUserId} />
       )}

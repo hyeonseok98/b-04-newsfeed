@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import useDataFilterByQuery from "../hooks/useDataFilterByQuery";
+
 import usePagination from "../hooks/usePagination"; // 커스텀 훅 추가
 import GameInfoModal from "../pages/HomePage/GameInfoModal";
 import Pagination from "../pages/HomePage/Pagination";
 import { setGames, setLoading, setSelectedGame } from "../store/slices/gameRankSlice";
 import supabase from "../supabase/supabaseClient";
+import { filterDataByQuery } from "../utils/filterDataByQuery";
 
 const GameRankFetchData = ({ gameSortBy }) => {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const GameRankFetchData = ({ gameSortBy }) => {
     fetchData();
   }, [dispatch]);
 
-  const filteredGames = useDataFilterByQuery(games, gameSortBy);
+  const filteredGames = filterDataByQuery(games, gameSortBy);
 
   // usePagination 훅 사용
   const { totalPages, currentItems, currentPage, handlePageChange } = usePagination(

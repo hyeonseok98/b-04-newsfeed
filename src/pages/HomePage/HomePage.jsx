@@ -1,18 +1,14 @@
 import GameRankFetchData from "../../api/GameRankFetchData";
 import GenreDropdown from "./GenreDropdown";
-import SearchTopContainer from "./SearchTopContainer";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import UserPosts from "../../api/UserPosts";
+import { setGameSortBy, setSortBy } from "../../store/slices/searchQuerySlice";
 import { Link } from "react-router-dom";
-import { setGameSortBy, setSearchQuery, setSortBy } from "../../store/slices/searchQuerySlice";
 
 const HomePage = () => {
   const dispatch = useDispatch();
   const { searchQuery = "", gameSortBy = "", sortBy = null } = useSelector((state) => state.searchQuery || {});
-  const handleSearch = (query) => {
-    dispatch(setSearchQuery(query));
-  };
 
   const handleGenreSelect = (genre) => {
     if (genre === "전체") {
@@ -37,16 +33,20 @@ const HomePage = () => {
 
   return (
     <StMain>
-      <StHeader>
+      {/* <StHeader>
         <h1 className="title" onClick={handleScrollToTop}>
           Fak<span>er</span>
         </h1>
-        <SearchTopContainer onSearch={handleSearch} />
+        
         <StLoginButtons>
           <button>로그인</button>
           <button>가입</button>
-        </StLoginButtons>
-      </StHeader>
+
+        </div>
+      </StHeader> */}
+
+      {/* </StLoginButtons>
+      </StHeader> */}
 
       <StNews>
         <GenreDropdown onGenreSelect={handleGenreSelect} />
@@ -227,7 +227,7 @@ export const StFeedButton = styled(Link)`
   padding: 0px 25px;
   border: none;
   border-radius: 25px;
-  background-color: #ffbf00;
+  background-color: var(--secondary-color);
   color: white;
   cursor: pointer;
   text-decoration: none;
@@ -235,6 +235,6 @@ export const StFeedButton = styled(Link)`
   align-items: center; /* 수직 정렬을 설정합니다. */
   justify-content: center; /* 수평 정렬을 설정합니다. */
   &:hover {
-    background-color: #ffcf3e;
+    background-color: var(--secondary-color);
   }
 `;
