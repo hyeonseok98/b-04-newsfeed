@@ -6,6 +6,7 @@ import UserPosts from "../../api/UserPosts";
 import { setGameSortBy, setSortBy } from "../../store/slices/searchQuerySlice";
 import { Link } from "react-router-dom";
 
+
 const HomePage = () => {
   const dispatch = useDispatch();
   const { searchQuery = "", gameSortBy = "", sortBy = null } = useSelector((state) => state.searchQuery || {});
